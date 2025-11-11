@@ -1,41 +1,20 @@
-# Prerequisites
-*.d
+# Ignore everything
+*
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Whitelist configuration
+!.gitignore
+!LICENSE
+!README.md
+!CMakeLists.txt
 
-# Precompiled Headers
-*.gch
-*.pch
+# Whitelist code
+!*.cpp
+!*.hpp
+!*.glsl
 
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+# Whitelist test paths 
+!tests
+!tests/**/
+# Whitelist code paths
+!code
+!code/**/
