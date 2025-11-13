@@ -1,3 +1,4 @@
 
 target_include_directories( ${LIBRARY_BIN} PUBLIC include )
-target_sources( ${LIBRARY_BIN} PUBLIC src/ogl.cpp )
+target_sources( ${LIBRARY_BIN} PUBLIC src/ogl.cpp
+                                        src/log.cpp)

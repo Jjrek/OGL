@@ -1,6 +1,7 @@
 #ifndef INCLUDE_OGL_HPP_
 #define INCLUDE_OGL_HPP_
 
+///@brief Library namespace
 namespace ogl{
 
     class Ogl{
