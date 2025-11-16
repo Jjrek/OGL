@@ -48,7 +48,14 @@ if( CMAKE_BUILD_TYPE MATCHES Debug )
         add_executable( ${TEST_BIN} )
         add_subdirectory( tests )
         target_include_directories( ${TEST_BIN} PUBLIC ./code/include/ ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} )
-        target_link_libraries( ${TEST_BIN} ${LIBRARY_BIN} GTest::gtest_main ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} glfw )
+        target_link_libraries( ${TEST_BIN}  ${LIBRARY_BIN}
+                                            GTest::gtest
+                                            GTest::gtest_main
+                                            GTest::gmock
+                                            GTest::gmock_main
+                                            ${OPENGL_LIBRARIES}
+                                            ${GLEW_LIBRARIES}
+                                            glfw )
     else()
         message( WARNING "GTest not found! Skipping test generation" )
     endif()
