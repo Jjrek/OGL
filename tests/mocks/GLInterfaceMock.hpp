@@ -14,6 +14,17 @@ class GLMock: public ogl::GLInterface{
 		MOCK_METHOD(void, glGetShaderInfoLog, (GLuint id, GLsizei bufSize, GLsizei* length, GLchar* infoLog), (override));
 		MOCK_METHOD(void, glGetShaderSource, (GLuint id, GLsizei maxLength, GLsizei* length, GLchar* source), (override));
 		MOCK_METHOD(void, glDeleteShader, (GLuint id), (override));
+
+		MOCK_METHOD(GLuint, glCreateProgram, (), (override));
+		MOCK_METHOD(void, glAttachShader, (GLuint id, GLuint shader), (override));
+		MOCK_METHOD(void, glLinkProgram, (GLuint id), (override));
+		MOCK_METHOD(void, glDetachShader, (GLuint id, GLuint shader), (override));
+		MOCK_METHOD(void, glGetProgramiv, (GLuint id, GLenum pname, GLint* param), (override));
+		MOCK_METHOD(void, glGetProgramInfoLog, (GLuint id, GLsizei bufSize, GLsizei* length, GLchar* infoLog), (override));
+		MOCK_METHOD(void, glUseProgram, (GLuint id), (override));
+		MOCK_METHOD(void, glGenVertexArrays, (GLsizei n, GLuint* arrays), (override));
+		MOCK_METHOD(void, glBindVertexArray, (GLuint array), (override));
+		MOCK_METHOD(void, glDeleteProgram, (GLuint id), (override));
 };
 
 
