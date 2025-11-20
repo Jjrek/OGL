@@ -20,6 +20,12 @@ namespace ogl {
 			virtual void glGetShaderSource(GLuint id, GLsizei maxLength, GLsizei* length, GLchar* source) = 0;
 			virtual void glDeleteShader(GLuint id) = 0;
 
+			//Buffer functions
+			virtual void glCreateBuffers(GLsizei n, GLuint* buffer) = 0;
+			virtual void glDeleteBuffers(GLsizei n, GLuint* buffer) = 0;
+			virtual void glNamedBufferData(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage) = 0;
+			virtual void glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data) = 0;
+
 			//Program functions
 			virtual GLuint glCreateProgram() = 0;
 			virtual void glAttachShader(GLuint id, GLuint shader) = 0;
@@ -31,6 +37,7 @@ namespace ogl {
 			virtual void glGenVertexArrays(GLsizei n, GLuint* arrays) = 0;
 			virtual void glBindVertexArray(GLuint array) = 0;
 			virtual void glDeleteProgram(GLuint id) = 0;
+			virtual void glDeleteVertexArrays(GLsizei n, GLuint* arrays) = 0;
 	};
 
 	///@brief OpenGL interface implementation
@@ -47,6 +54,12 @@ namespace ogl {
 			void glGetShaderSource(GLuint id, GLsizei maxLength, GLsizei* length, GLchar* source)final;
 			void glDeleteShader(GLuint id)final;
 
+			//Buffer functions
+			void glCreateBuffers(GLsizei n, GLuint* buffer)final;
+			void glDeleteBuffers(GLsizei n, GLuint* buffer)final;
+			void glNamedBufferData(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage)final;
+			void glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data)final;
+
 			//Program functions
 			GLuint glCreateProgram()final;
 			void glAttachShader(GLuint id, GLuint shader)final;
@@ -58,6 +71,7 @@ namespace ogl {
 			void glGenVertexArrays(GLsizei n, GLuint* arrays)final;
 			void glBindVertexArray(GLuint array)final;
 			void glDeleteProgram(GLuint id)final;
+			void glDeleteVertexArrays(GLsizei n, GLuint* arrays)final;
 	};
 
 }
