@@ -16,23 +16,34 @@ namespace ogl{
 		gl = interface;
 		isValid = false;
 		id = gl->glCreateProgram();
+		LOG(LogType::CONSTRUC)<<"program id:"<<id<<"\n";
 	}
 
 	Program::~Program(){
 		gl->glDeleteProgram(id);
-		if(isValid)gl->glDeleteVertexArrays(1, &vertexArrayID);
+		LOG(LogType::DESTRUCT)<<"program id:"<<id<<"\n";
+		if(isValid){
+			LOG(LogType::DESTRUCT)<<"vao id:"<<vertexArrayID<<"\n";
+			gl->glDeleteVertexArrays(1, &vertexArrayID);
+		}
 	}
 
 	bool Program::build(const vector<shared_ptr<Shader>>& shaders){
 
 		for(auto shader: shaders){
-			gl->glAttachShader(id, shader->getId());
+			unsigned shaderId = shader->id();
+			gl->glAttachShader(id, shaderId);
+			LOG(LogType::INFO)<<"Attaching shader:"
+								<<shaderId
+								<<" to program:"
+								<<id
+								<<"\n";
 		}
 
 		gl->glLinkProgram(id);
 
 		for(auto shader: shaders){
-			gl->glDetachShader(id, shader->getId());
+			gl->glDetachShader(id, shader->id());
 		}
 
 		GLint succes;
@@ -50,6 +61,7 @@ namespace ogl{
 
 		gl->glUseProgram(id);
 		gl->glGenVertexArrays(1, &vertexArrayID);
+		LOG(LogType::CONSTRUC)<<"vao id:"<<vertexArrayID<<"\n";
 		gl->glBindVertexArray(vertexArrayID);
 
 		pollVariables();

@@ -11,6 +11,11 @@ namespace ogl{
 
 	Uniform::Uniform(Params params, std::shared_ptr<GLInterface> interface)noexcept:
 		Variable(params, interface){
+		LOG(LogType::CONSTRUC)<<"uniform address:"<<params.address<<"\n";
+	}
+
+	Uniform::~Uniform(){
+		LOG(LogType::DESTRUCT)<<"uniform address:"<<params.address<<"\n";
 	}
 
 	void Uniform::pass(void* pDataptr){
@@ -64,12 +69,23 @@ namespace ogl{
 
 	Attribute::Attribute(Params params, std::shared_ptr<GLInterface> interface)noexcept:
 		Buffered(params, interface){
+		LOG(LogType::CONSTRUC)<<"attribute address:"<<params.address<<"\n";
+	}
+
+	Attribute::~Attribute(){
+		LOG(LogType::DESTRUCT)<<"attribute address:"<<params.address<<"\n";
 	}
 
 	void Attribute::attachBuffer(std::shared_ptr<DataBuffer> buffer){
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
-		gl->glBindBuffer(GL_ARRAY_BUFFER, buffer->id());
+		unsigned bufferId = buffer->id();
+		gl->glBindBuffer(GL_ARRAY_BUFFER, bufferId);
+		LOG(LogType::INFO)<<"attribute:"
+							<<params.address
+							<<" attaching to buffer:"
+							<<bufferId
+							<<"\n";
 		switch(variableType){
 			case	GL_BOOL						 	:   gl->glVertexAttribPointer(address, 1, GL_BOOL, GL_FALSE, 0, 0); break;
 			case	GL_BYTE						 	:   gl->glVertexAttribIPointer(address, 1, GL_BYTE, 0, 0); break;
@@ -124,18 +140,40 @@ namespace ogl{
 
 	Buffer_Block::Buffer_Block(Params params, std::shared_ptr<GLInterface> interface)noexcept:
 		Buffered(params, interface){
+		if(params.variableType==GL_UNIFORM_BLOCK)
+			LOG(LogType::CONSTRUC)<<"ubo address:"<<params.address<<"\n";
+		if(params.variableType==GL_SHADER_STORAGE_BLOCK)
+			LOG(LogType::CONSTRUC)<<"ssbo address:"<<params.address<<"\n";
+	}
+
+	Buffer_Block::~Buffer_Block(){
+		if(params.variableType==GL_UNIFORM_BLOCK)
+			LOG(LogType::DESTRUCT)<<"ubo address:"<<params.address<<"\n";
+		if(params.variableType==GL_SHADER_STORAGE_BLOCK)
+			LOG(LogType::DESTRUCT)<<"ssbo address:"<<params.address<<"\n";
 	}
 
 	void Buffer_Block::attachBuffer(std::shared_ptr<DataBuffer> buffer){
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
 		GLuint& programId = params.programId;
+		unsigned bindingPoint = buffer->bindingPoint();
 		switch(variableType){
 			case GL_UNIFORM_BLOCK :
-					gl->glUniformBlockBinding(programId, address, buffer->bindingPoint());
+					LOG(LogType::INFO)<<"ubo:"
+										<<params.address
+										<<" attaching to binding:"
+										<<bindingPoint
+										<<"\n";
+					gl->glUniformBlockBinding(programId, address, bindingPoint);
 					break;
 			case GL_SHADER_STORAGE_BLOCK :
-					gl->glShaderStorageBlockBinding(programId, address, buffer->bindingPoint());
+					LOG(LogType::INFO)<<"ssbo:"
+										<<params.address
+										<<" attaching to binding:"
+										<<bindingPoint
+										<<"\n";
+					gl->glShaderStorageBlockBinding(programId, address, bindingPoint);
 					break;
 		}
 	}

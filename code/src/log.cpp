@@ -11,6 +11,10 @@ namespace ogl{
 
 	std::ostream& Log::get(const LogType type){
 		if(static_cast<bool>(loggingFlags & type) && output){
+			if(static_cast<bool>(type&LogType::CONSTRUC))
+				(*output)<<"HI! ";
+			if(static_cast<bool>(type&LogType::DESTRUCT))
+				(*output)<<"BYE! ";
 			return *output;
 		}else{
 			return nullstream;

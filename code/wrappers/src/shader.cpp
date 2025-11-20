@@ -93,32 +93,42 @@ string addLineNumbers(const char code[]){
 Shader::Shader( const GLenum shaderType,
 				const string rawCode,
 				const set<string>& compileFlags,
-				std::unique_ptr<GLInterface> interface)noexcept:gl(std::move(interface)){
-	code = removeInactiveBlocks(rawCode, compileFlags);
-	isValid = !code.empty();
+				std::shared_ptr<GLInterface> interface)noexcept:gl(interface){
+	code_i = removeInactiveBlocks(rawCode, compileFlags);
+	isValid = !code_i.empty();
 	if(!isValid) return;
 
 	type = shaderType;
-	id = gl->glCreateShader(shaderType);
-	gl->glShaderSource(id, code.c_str());
-	gl->glCompileShader(id);
+	id_i = gl->glCreateShader(shaderType);
+	LOG(LogType::CONSTRUC)<<"shader id:"<<id_i<<"\n";
+	gl->glShaderSource(id_i, code_i.c_str());
+	gl->glCompileShader(id_i);
 	GLint succes;
-	gl->glGetShaderiv(id, GL_COMPILE_STATUS, &succes);
-	if(!succes){
+	gl->glGetShaderiv(id_i, GL_COMPILE_STATUS, &succes);
+	if(succes){
+		LOG(LogType::SHADER)<<addLineNumbers(code_i.c_str())<<"\n";
+	}else{
 		isValid = false;
 		GLint length;
-		gl->glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+		gl->glGetShaderiv(id_i, GL_INFO_LOG_LENGTH, &length);
 		vector<char> info(length);
-		gl->glGetShaderInfoLog(id, length, &length, info.data());
+		gl->glGetShaderInfoLog(id_i, length, &length, info.data());
 
-		gl->glGetShaderiv(id, GL_SHADER_SOURCE_LENGTH, &length);
+		gl->glGetShaderiv(id_i, GL_SHADER_SOURCE_LENGTH, &length);
 		vector<char> source(length);
-		gl->glGetShaderSource(id, length, &length, source.data());
-		gl->glDeleteShader(id);
+		gl->glGetShaderSource(id_i, length, &length, source.data());
+		Delete();
 		LOG(LogType::ERROR)<<info.data()<<"\n\n"<<addLineNumbers(source.data());
 	}
 }
 
+void Shader::Delete(){
+	gl->glDeleteShader(id_i);
+	LOG(LogType::DESTRUCT)<<"shader id:"<<id_i<<"\n";
+}
+
 Shader::~Shader(){
-	if(isValid)gl->glDeleteShader(id);
+	if(isValid){
+		Delete();
+	}
 }

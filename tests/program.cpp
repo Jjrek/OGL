@@ -38,7 +38,7 @@ class program: public testing::Test{
 		std::shared_ptr<GLMock> gl;
 
 		program(){
-			ogl::Log::Handle().setOutputStream(nullptr);
+			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 			shader1 = std::make_shared<StrictMock<ShaderMock>>();
 			shader2 = std::make_shared<StrictMock<ShaderMock>>();
 			gl = std::make_shared<StrictMock<GLMock>>();
@@ -51,8 +51,8 @@ class program: public testing::Test{
 		}
 
 		void building(){
-			EXPECT_CALL(*shader1, getId()).Times(2).WillRepeatedly(Return(shader1Id));
-			EXPECT_CALL(*shader2, getId()).Times(2).WillRepeatedly(Return(shader2Id));
+			EXPECT_CALL(*shader1, id()).Times(2).WillRepeatedly(Return(shader1Id));
+			EXPECT_CALL(*shader2, id()).Times(2).WillRepeatedly(Return(shader2Id));
 			EXPECT_CALL(*gl, glAttachShader(programId, shader1Id)).Times(1);
 			EXPECT_CALL(*gl, glAttachShader(programId, shader2Id)).Times(1);
 			EXPECT_CALL(*gl, glLinkProgram(programId)).Times(1);

@@ -12,19 +12,21 @@ namespace ogl{
 	///@brief Wrapper class containing single OpenGL shader
 	class Shader{
 		private:
-			std::string code;
+			std::string code_i;
 			bool isValid;
 
-			std::unique_ptr<GLInterface> gl;
+			std::shared_ptr<GLInterface> gl;
 
 			GLenum type;
-			GLuint id;
+			GLuint id_i;
 
 			Shader() = delete;
 			Shader(const Shader& old) = delete;
 			Shader(Shader&& old) = delete;
 			Shader& operator=(const Shader& old) = delete;
 			Shader& operator=(Shader&& old) = delete;
+
+			void Delete();
 
 		public:
 			/**
@@ -52,14 +54,14 @@ namespace ogl{
 			Shader( const GLenum shaderType,
 					const std::string rawCode,
 					const std::set<std::string>& compileFlags,
-					std::unique_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
+					std::shared_ptr<GLInterface> interface = std::make_shared<GL>())noexcept;
 			virtual ~Shader();
 
 			///@brief OpenGl shader id getter
-			virtual GLuint getId(){return id;};
+			virtual GLuint id(){return id_i;};
 
 			///@brief Returns code that was passed to OpenGL.
-			std::string getCode(){return code;}
+			std::string code(){return code_i;}
 			operator bool(){return isValid;}
 	};
 

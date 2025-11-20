@@ -55,7 +55,7 @@ TEST_F(logging, passing_or_of_flags){
 
 TEST_F(logging, failing_or_of_flags){
 	//NOLINTNEXTLINE
-	ogl::Log::Handle().setLoggingFlags(LogType::ERROR | LogType::INFO);
+	ogl::Log::Handle().setLoggingFlags(LogType::ERROR | LogType::DESTRUCT);
 
 	string message = "Test of failing warning output. \n";
 	LOG(LogType::WRN)<<message;

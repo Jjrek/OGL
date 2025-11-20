@@ -9,7 +9,7 @@
 class ShaderMock: public ogl::Shader{
 	public:
 		ShaderMock():Shader(GL_VERTEX_SHADER, "dummy", {}, std::make_unique<testing::NiceMock<GLMock>>()){};
-		MOCK_METHOD(GLuint, getId, (), (override));
+		MOCK_METHOD(GLuint, id, (), (override));
 
 };
 

@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "dataBuffer.hpp"
+#include "log.hpp"
 
 #include "GLInterfaceMock.hpp"
 
@@ -18,6 +19,7 @@ class dataBuffer: public testing::Test{
 		std::shared_ptr<GLMock> gl;
 
 		dataBuffer(){
+			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 			gl = std::make_shared<StrictMock<GLMock>>();
 		}
 

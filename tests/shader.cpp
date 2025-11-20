@@ -31,7 +31,7 @@ class shaders: public testing::Test{
 		std::unique_ptr<GLMock> gl;
 
 		shaders():gl(std::make_unique<StrictMock<GLMock>>()){
-			ogl::Log::Handle().setOutputStream(nullptr);
+			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 		}
 
 		void createShader(const string code, const std::set<std::string>& compileFlags){
@@ -57,11 +57,11 @@ class shaders: public testing::Test{
 		}
 
 		void expectMiddleLineDropped(){
-			EXPECT_EQ(shader->getCode(), line1+line3);
+			EXPECT_EQ(shader->code(), line1+line3);
 		}
 
 		void expectMiddleLineKept(){
-			EXPECT_EQ(shader->getCode(), line1+line2+line3);
+			EXPECT_EQ(shader->code(), line1+line2+line3);
 		}
 };
 

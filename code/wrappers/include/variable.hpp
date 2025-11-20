@@ -42,7 +42,7 @@ namespace ogl{
 
 		public:
 			Uniform(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
-			~Uniform(){};
+			~Uniform();
 
 			///@brief Writes to contained variable
 			void pass(void* pDataptr);
@@ -80,7 +80,7 @@ namespace ogl{
 
 		public:
 			Attribute(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
-			~Attribute(){};
+			~Attribute();
 
 			void attachBuffer(std::shared_ptr<DataBuffer> buffer)final;
 
@@ -99,7 +99,7 @@ namespace ogl{
 
 		public:
 			Buffer_Block(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
-			~Buffer_Block(){};
+			~Buffer_Block();
 
 			void attachBuffer(std::shared_ptr<DataBuffer> buffer)final;
 	};

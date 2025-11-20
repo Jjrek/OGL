@@ -1,4 +1,5 @@
 #include "dataBuffer.hpp"
+#include "log.hpp"
 
 #include <cstring>
 
@@ -12,11 +13,13 @@ namespace ogl {
 
 		bindingPoint_i = -1;
 		memoryUsageHint = GL_STATIC_DRAW;
+		LOG(LogType::CONSTRUC)<<"buffer id:"<<id_i<<"\n";
 	}
 
 	DataBuffer::~DataBuffer(){
 		clear();
 		gl->glDeleteBuffers(1, &id_i);
+		LOG(LogType::DESTRUCT)<<"buffer id:"<<id_i<<"\n";
 		id_i = 0;
 	}
 

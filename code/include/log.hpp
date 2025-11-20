@@ -5,12 +5,14 @@
 
 namespace ogl{
 	enum class LogType : unsigned short
-		{	INFO	= 1<<0,
+		{	NONE	= 0,
+			INFO	= 1<<0,
 			ERROR	= 1<<1,
 			WRN		= 1<<2,
 			SHADER	= 1<<3,
 			CONSTRUC= 1<<4,
-			DESTRUCT= 1<<5 };
+			DESTRUCT= 1<<5,
+			ALL		= 255};
 	inline LogType operator|(LogType lType, LogType rType){
 		using Type = std::underlying_type<LogType>::type;
 		return LogType(static_cast<Type>(lType) | static_cast<Type>(rType));

@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "variable.hpp"
+#include "log.hpp"
 
 #include "glm/glm.hpp"
 
@@ -26,6 +27,7 @@ class variable : public testing::Test{
 		std::shared_ptr<DataBufferMock> buffer;
 
 		variable(){
+			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 			gl = std::make_shared<StrictMock<GLMock>>();
 			buffer = std::make_shared<StrictMock<DataBufferMock>>();
 		}
