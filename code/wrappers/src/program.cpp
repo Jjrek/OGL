@@ -3,58 +3,117 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 using std::shared_ptr;
+using std::make_shared;
 using std::vector;
+using std::string;
 
 namespace ogl{
 
-Program::Program(std::unique_ptr<GLInterface> interface)
-	noexcept:gl(std::move(interface)){
-
-	isValid = false;
-	id = gl->glCreateProgram();
-}
-
-Program::~Program(){
-	gl->glDeleteProgram(id);
-}
-
-bool Program::build(const vector<shared_ptr<Shader>>& shaders){
-
-	for(auto shader: shaders){
-		gl->glAttachShader(id, shader->getId());
+	Program::Program(std::shared_ptr<GLInterface> interface)noexcept{
+		gl = interface;
+		isValid = false;
+		id = gl->glCreateProgram();
 	}
 
-	gl->glLinkProgram(id);
-
-	for(auto shader: shaders){
-		gl->glDetachShader(id, shader->getId());
+	Program::~Program(){
+		gl->glDeleteProgram(id);
+		if(isValid)gl->glDeleteVertexArrays(1, &vertexArrayID);
 	}
 
-	GLint succes;
-	gl->glGetProgramiv(id, GL_LINK_STATUS, &succes);
-	if(!succes){
-		GLint length;
-		gl->glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
-		vector<char> info(length);
-		gl->glGetProgramInfoLog(id, length, &length, info.data());
-		LOG(LogType::ERROR)<<info.data()<<"\n";
-		return false;
+	bool Program::build(const vector<shared_ptr<Shader>>& shaders){
+
+		for(auto shader: shaders){
+			gl->glAttachShader(id, shader->getId());
+		}
+
+		gl->glLinkProgram(id);
+
+		for(auto shader: shaders){
+			gl->glDetachShader(id, shader->getId());
+		}
+
+		GLint succes;
+		gl->glGetProgramiv(id, GL_LINK_STATUS, &succes);
+		if(!succes){
+			GLint length;
+			gl->glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+			vector<char> info(length);
+			gl->glGetProgramInfoLog(id, length, &length, info.data());
+			LOG(LogType::ERROR)<<info.data()<<"\n";
+			return false;
+		}
+
+		isValid = true;
+
+		gl->glUseProgram(id);
+		gl->glGenVertexArrays(1, &vertexArrayID);
+		gl->glBindVertexArray(vertexArrayID);
+
+		pollVariables();
+
+		return true;
 	}
 
-	isValid = true;
+	void Program::poll(GLenum resourceType, auto factory){
+		GLenum propertyEnums[3] = {GL_NAME_LENGTH, GL_TYPE, GL_LOCATION};
+		GLint properties[3];
+		GLint& nameLen = properties[0];
+		GLint& type = properties[1];
+		GLint& address = properties[2];
+		int enumCount = (resourceType == GL_UNIFORM || resourceType == GL_PROGRAM_INPUT)?
+						3:1;
 
-	gl->glUseProgram(id);
-	gl->glGenVertexArrays(1, &vertexArrayID);
-	gl->glBindVertexArray(vertexArrayID);
+		GLint count;
+		gl->glGetProgramInterfaceiv(id, resourceType, GL_ACTIVE_RESOURCES, &count);
+		for(int i = 0; i < count; ++i){
+			gl->glGetProgramResourceiv(	id,
+									resourceType,
+									i,
+									enumCount,
+									propertyEnums,
+									enumCount,
+									NULL,
+									properties);
 
-	return true;
-}
+			vector<GLchar> name(nameLen);
+			gl->glGetProgramResourceName(id,
+									resourceType,
+									i,
+									nameLen,
+									&nameLen,
+									name.data());
 
-void Program::use(){
-	gl->glUseProgram(id);
-	gl->glBindVertexArray(vertexArrayID);
-}
+			string name_s(name.data());
+			variables[name_s] =
+				factory(name_s, {static_cast<GLuint>(address), type, id});
+		}
+	}
+
+	void Program::pollVariables(){
+		poll(GL_UNIFORM,
+			[this](string, Variable::Params params){
+				return make_shared<Uniform>(params, gl);});
+		poll(GL_PROGRAM_INPUT,
+			[this](string, Variable::Params params){
+				return make_shared<Attribute>(params, gl);});
+		poll(GL_UNIFORM_BLOCK,
+			[this](string name, Variable::Params params){
+				return make_shared<Buffer_Block>(Variable::Params{gl->glGetUniformBlockIndex(params.programId, name.c_str()),
+													GL_UNIFORM_BLOCK,
+													params.programId}, gl);});
+		poll(GL_SHADER_STORAGE_BLOCK,
+			[this](string name, Variable::Params params){
+				return make_shared<Buffer_Block>(Variable::Params{gl->glGetProgramResourceIndex(params.programId, GL_SHADER_STORAGE_BLOCK, name.c_str()),
+													GL_SHADER_STORAGE_BLOCK,
+													params.programId}, gl);});
+	}
+
+	void Program::use(){
+		gl->glUseProgram(id);
+		gl->glBindVertexArray(vertexArrayID);
+	}
 
 }

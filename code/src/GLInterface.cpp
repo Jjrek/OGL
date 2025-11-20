@@ -55,6 +55,18 @@ namespace ogl {
 	link1(glBindVertexArray,GLuint,array)
 	link1(glDeleteProgram,GLuint,id)
 	link2(glDeleteVertexArrays,GLsizei,n,GLuint*,arrays)
+	//Program introspection
+	link4(glGetProgramInterfaceiv,GLuint,program,GLenum,programInterface,GLenum,pname,GLint*,params)
+	link6(glGetProgramResourceName,GLuint,program,GLenum,programInterface,GLuint,index,GLsizei,bufSize,GLsizei*,length,GLchar*,name)
+	void GL::glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum* props, GLsizei bufSize, GLsizei *length, GLint *params){
+		::glGetProgramResourceiv(program,programInterface,index,propCount,props,bufSize,length,params);
+	}
+	GLuint GL::glGetUniformBlockIndex(GLuint program, const GLchar* uniformBlockName){
+		return ::glGetUniformBlockIndex(program,uniformBlockName);
+	}
+	GLuint GL::glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar* name){
+		return ::glGetProgramResourceIndex(program,programInterface,name);
+	}
 
 	//Variable functions
 	link4(glProgramUniform1iv,			GLuint,program,GLint,location,GLsizei,count,const GLint*,value)

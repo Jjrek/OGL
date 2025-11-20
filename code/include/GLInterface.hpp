@@ -38,6 +38,12 @@ namespace ogl {
 			virtual void glBindVertexArray(GLuint array) = 0;
 			virtual void glDeleteProgram(GLuint id) = 0;
 			virtual void glDeleteVertexArrays(GLsizei n, GLuint* arrays) = 0;
+			//Program introspection
+			virtual void glGetProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint* params) = 0;
+			virtual void glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum* props, GLsizei bufSize, GLsizei *length, GLint *params) = 0;
+			virtual void glGetProgramResourceName(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei* length, GLchar *name) = 0;
+			virtual GLuint glGetUniformBlockIndex(GLuint program, const GLchar* uniformBlockName) = 0;
+			virtual GLuint glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar* name) = 0;
 
 			//Variable functions
 			virtual void glProgramUniform1iv		(GLuint program, GLint location, GLsizei count, const GLint* value) = 0;
@@ -101,6 +107,12 @@ namespace ogl {
 			void glBindVertexArray(GLuint array)final;
 			void glDeleteProgram(GLuint id)final;
 			void glDeleteVertexArrays(GLsizei n, GLuint* arrays)final;
+			//Program introspection
+			void glGetProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname, GLint* params)final;
+			void glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum* props, GLsizei bufSize, GLsizei *length, GLint *params)final;
+			void glGetProgramResourceName(GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei* length, GLchar *name)final;
+			GLuint glGetUniformBlockIndex(GLuint program, const GLchar* uniformBlockName)final;
+			GLuint glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar* name)final;
 
 			//Variable functions
 			void glProgramUniform1iv		(GLuint program, GLint location, GLsizei count, const GLint* value)final;

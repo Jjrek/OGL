@@ -3,9 +3,11 @@
 
 #include "GLInterface.hpp"
 #include "shader.hpp"
+#include "variable.hpp"
 
 #include <memory>
 #include <vector>
+#include <map>
 
 namespace ogl{
 
@@ -14,9 +16,11 @@ namespace ogl{
 		private:
 			bool isValid;
 
-			std::unique_ptr<GLInterface> gl;
+			std::shared_ptr<GLInterface> gl;
 			GLuint id;
 			GLuint vertexArrayID;
+
+			std::map<std::string, std::shared_ptr<Variable>> variables;
 
 			Program() = delete;
 			Program(const Program& old) = delete;
@@ -24,9 +28,12 @@ namespace ogl{
 			Program& operator=(const Program& old) = delete;
 			Program& operator=(Program&& old) = delete;
 
+			void poll(GLenum resourceType, auto factory);
+			void pollVariables();
+
 		public:
 			///@param interface - Interface for OpenGL calls.
-			Program(std::unique_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
+			Program(std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			~Program();
 			operator bool(){return isValid;}
 

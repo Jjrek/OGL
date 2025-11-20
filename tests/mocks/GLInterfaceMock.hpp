@@ -31,6 +31,11 @@ class GLMock: public ogl::GLInterface{
 		MOCK_METHOD(void, glBindVertexArray, (GLuint array), (override));
 		MOCK_METHOD(void, glDeleteProgram, (GLuint id), (override));
 		MOCK_METHOD(void, glDeleteVertexArrays, (GLsizei n, GLuint* arrays), (override));
+		MOCK_METHOD(void,glGetProgramInterfaceiv, (GLuint program, GLenum programInterface, GLenum pname, GLint* params), (override));
+		MOCK_METHOD(void,glGetProgramResourceiv, (GLuint program, GLenum programInterface, GLuint index, GLsizei propCount, const GLenum* props, GLsizei bufSize, GLsizei *length, GLint *params), (override));
+		MOCK_METHOD(void,glGetProgramResourceName, (GLuint program, GLenum programInterface, GLuint index, GLsizei bufSize, GLsizei* length, GLchar *name), (override));
+		MOCK_METHOD(GLuint, glGetUniformBlockIndex, (GLuint program, const GLchar* uniformBlockName), (override));
+		MOCK_METHOD(GLuint, glGetProgramResourceIndex, (GLuint program, GLenum programInterface, const GLchar* name), (override));
 
 		MOCK_METHOD(void, glProgramUniform1iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
 		MOCK_METHOD(void, glProgramUniform2iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
