@@ -38,6 +38,35 @@ namespace ogl {
 			virtual void glBindVertexArray(GLuint array) = 0;
 			virtual void glDeleteProgram(GLuint id) = 0;
 			virtual void glDeleteVertexArrays(GLsizei n, GLuint* arrays) = 0;
+
+			//Variable functions
+			virtual void glProgramUniform1iv		(GLuint program, GLint location, GLsizei count, const GLint* value) = 0;
+			virtual void glProgramUniform2iv		(GLuint program, GLint location, GLsizei count, const GLint* value) = 0;
+			virtual void glProgramUniform3iv		(GLuint program, GLint location, GLsizei count, const GLint* value) = 0;
+			virtual void glProgramUniform4iv		(GLuint program, GLint location, GLsizei count, const GLint* value) = 0;
+			virtual void glProgramUniform1uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value) = 0;
+			virtual void glProgramUniform2uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value) = 0;
+			virtual void glProgramUniform3uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value) = 0;
+			virtual void glProgramUniform4uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value) = 0;
+			virtual void glProgramUniform1fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniform2fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniform3fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniform4fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix2fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix3fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glProgramUniformMatrix4fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
+			virtual void glBindBuffer(GLenum target, GLuint buffer) = 0;
+			virtual void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer) = 0;
+			virtual void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer) = 0;
+			virtual void glVertexAttribDivisor(GLuint index, GLuint divisor) = 0;
+			virtual void glUniformBlockBinding(GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding) = 0;
+			virtual void glShaderStorageBlockBinding(GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding) = 0;
 	};
 
 	///@brief OpenGL interface implementation
@@ -72,6 +101,35 @@ namespace ogl {
 			void glBindVertexArray(GLuint array)final;
 			void glDeleteProgram(GLuint id)final;
 			void glDeleteVertexArrays(GLsizei n, GLuint* arrays)final;
+
+			//Variable functions
+			void glProgramUniform1iv		(GLuint program, GLint location, GLsizei count, const GLint* value)final;
+			void glProgramUniform2iv		(GLuint program, GLint location, GLsizei count, const GLint* value)final;
+			void glProgramUniform3iv		(GLuint program, GLint location, GLsizei count, const GLint* value)final;
+			void glProgramUniform4iv		(GLuint program, GLint location, GLsizei count, const GLint* value)final;
+			void glProgramUniform1uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value)final;
+			void glProgramUniform2uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value)final;
+			void glProgramUniform3uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value)final;
+			void glProgramUniform4uiv		(GLuint program, GLint location, GLsizei count, const GLuint* value)final;
+			void glProgramUniform1fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniform2fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniform3fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniform4fv		(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix2fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix3fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glProgramUniformMatrix4fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
+			void glBindBuffer(GLenum target, GLuint buffer)final;
+			void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer)final;
+			void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer)final;
+			void glVertexAttribDivisor(GLuint index, GLuint divisor)final;
+			void glUniformBlockBinding(GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding)final;
+			void glShaderStorageBlockBinding(GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding)final;
 	};
 
 }

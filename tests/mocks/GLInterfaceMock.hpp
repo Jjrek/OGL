@@ -31,6 +31,34 @@ class GLMock: public ogl::GLInterface{
 		MOCK_METHOD(void, glBindVertexArray, (GLuint array), (override));
 		MOCK_METHOD(void, glDeleteProgram, (GLuint id), (override));
 		MOCK_METHOD(void, glDeleteVertexArrays, (GLsizei n, GLuint* arrays), (override));
+
+		MOCK_METHOD(void, glProgramUniform1iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
+		MOCK_METHOD(void, glProgramUniform2iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
+		MOCK_METHOD(void, glProgramUniform3iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
+		MOCK_METHOD(void, glProgramUniform4iv,			(GLuint program, GLint location, GLsizei count, const GLint* value), (override));
+		MOCK_METHOD(void, glProgramUniform1uiv,			(GLuint program, GLint location, GLsizei count, const GLuint* value), (override));
+		MOCK_METHOD(void, glProgramUniform2uiv,			(GLuint program, GLint location, GLsizei count, const GLuint* value), (override));
+		MOCK_METHOD(void, glProgramUniform3uiv,			(GLuint program, GLint location, GLsizei count, const GLuint* value), (override));
+		MOCK_METHOD(void, glProgramUniform4uiv,			(GLuint program, GLint location, GLsizei count, const GLuint* value), (override));
+		MOCK_METHOD(void, glProgramUniform1fv,			(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniform2fv,			(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniform3fv,			(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniform4fv,			(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix2fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix2x3fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix2x4fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix3x2fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix3fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix3x4fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix4x2fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix4x3fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glProgramUniformMatrix4fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
+		MOCK_METHOD(void, glBindBuffer,(GLenum target, GLuint buffer), (override));
+		MOCK_METHOD(void, glVertexAttribPointer, (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer), (override));
+		MOCK_METHOD(void, glVertexAttribIPointer, (GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer), (override));
+		MOCK_METHOD(void, glVertexAttribDivisor, (GLuint index, GLuint divisor), (override));
+		MOCK_METHOD(void, glUniformBlockBinding, (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding), (override));
+		MOCK_METHOD(void, glShaderStorageBlockBinding, (GLuint program, GLuint storageBlockIndex, GLuint storageBlockBinding), (override));
 };
 
 
