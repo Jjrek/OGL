@@ -128,4 +128,10 @@ namespace ogl{
 		gl->glBindVertexArray(vertexArrayID);
 	}
 
+	shared_ptr<Variable> Program::get(string varName){
+		if(variables.contains(varName))
+			return variables[varName];
+		return {};
+	}
+
 }

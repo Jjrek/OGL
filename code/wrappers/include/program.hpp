@@ -42,6 +42,9 @@ namespace ogl{
 
 			///@brief Activates program.
 			void use();
+
+			///@brief Returns stored variable wrapper or empty pointer if not found.
+			std::shared_ptr<Variable> get(std::string varName);
 	};
 
 }

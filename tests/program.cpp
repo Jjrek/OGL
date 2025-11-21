@@ -128,3 +128,38 @@ TEST_F(program, activation){
 	p.use();
 }
 
+TEST_F(program, variable_get_uniform){
+	buildingSucces();
+	ogl::Program p(gl);
+	p.build({shader1, shader2});
+	EXPECT_GT(p.get(uniform.name).use_count(), 0);
+}
+
+TEST_F(program, variable_get_attribute){
+	buildingSucces();
+	ogl::Program p(gl);
+	p.build({shader1, shader2});
+	EXPECT_GT(p.get(attribute.name).use_count(), 0);
+}
+
+TEST_F(program, variable_get_ubo){
+	buildingSucces();
+	ogl::Program p(gl);
+	p.build({shader1, shader2});
+	EXPECT_GT(p.get(UBO.name).use_count(), 0);
+}
+
+TEST_F(program, variable_get_ssbo){
+	buildingSucces();
+	ogl::Program p(gl);
+	p.build({shader1, shader2});
+	EXPECT_GT(p.get(SSBO.name).use_count(), 0);
+}
+
+TEST_F(program, variable_get_fail){
+	buildingSucces();
+	ogl::Program p(gl);
+	p.build({shader1, shader2});
+	EXPECT_EQ(p.get("nonexistingname").use_count(), 0);
+}
+
