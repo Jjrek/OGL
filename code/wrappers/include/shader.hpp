@@ -29,6 +29,7 @@ namespace ogl{
 			void Delete();
 
 		public:
+			using CompileFlags = std::set<std::string>;
 			/**
 			@param shaderType - Type of shader to create.
 			@param rawCode - Code of shader to be processed and compiled.
@@ -53,7 +54,7 @@ namespace ogl{
 			*/
 			Shader( const GLenum shaderType,
 					const std::string rawCode,
-					const std::set<std::string>& compileFlags,
+					const CompileFlags& compileFlags = {},
 					std::shared_ptr<GLInterface> interface = std::make_shared<GL>())noexcept;
 			virtual ~Shader();
 

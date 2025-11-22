@@ -8,13 +8,14 @@
 #include <algorithm>
 
 using ogl::Shader;
+using CompileFlags = ogl::Shader::CompileFlags;
 
 using std::istringstream;
 using std::string;
 using std::set;
 using std::vector;
 
-void extractFlags(set<string>& flags, const string line){
+void extractFlags(CompileFlags& flags, const string line){
 	istringstream lineStream(line);
 	for(string line; std::getline(lineStream, line, ' ');){
 		if(!line.empty()){
@@ -23,8 +24,8 @@ void extractFlags(set<string>& flags, const string line){
 	}
 }
 
-bool flagsMatchCurrentShader(set<string>& flags,
-							 const set<string>& compileFlags){
+bool flagsMatchCurrentShader(CompileFlags& flags,
+							 const CompileFlags& compileFlags){
 	for(auto& flag : flags){
 		if(	(flag[0] == '~' && !compileFlags.contains(flag.substr(1))) ||
 			compileFlags.contains(flag))
@@ -36,22 +37,24 @@ bool flagsMatchCurrentShader(set<string>& flags,
 }
 
 string removeInactiveBlocks( const string code,
-							 const set<string>& compileFlags)noexcept{
-	vector<set<string>> openedBlocks;
+							 const CompileFlags& compileFlags)noexcept{
+	vector<CompileFlags> openedBlocks;
 	istringstream codeStream(code);
 	string processedCode, processedLine;
 	int mismatchedBlocks = 0;
 
 	for(string line; std::getline(codeStream, line);){
 		//remove indentation
-		processedLine = line.substr(line.find_first_not_of(" \t"));
+		size_t start = line.find_first_not_of(" \t");
+		if(start == string::npos)continue;
+		processedLine = line.substr(start);
 		std::replace(processedLine.begin(), processedLine.end(), '\t', ' ');
 
 		if(processedLine[0] == '@'){
 			if(processedLine[1] == '!'){
 				//remove tag
 				processedLine = line.substr(2);
-				set<string> closingFlags;
+				CompileFlags closingFlags;
 				extractFlags(closingFlags, processedLine);
 				if(!flagsMatchCurrentShader(closingFlags, compileFlags)){
 					--mismatchedBlocks;
@@ -92,7 +95,7 @@ string addLineNumbers(const char code[]){
 
 Shader::Shader( const GLenum shaderType,
 				const string rawCode,
-				const set<string>& compileFlags,
+				const CompileFlags& compileFlags,
 				std::shared_ptr<GLInterface> interface)noexcept:gl(interface){
 	code_i = removeInactiveBlocks(rawCode, compileFlags);
 	isValid = !code_i.empty();
@@ -100,7 +103,15 @@ Shader::Shader( const GLenum shaderType,
 
 	type = shaderType;
 	id_i = gl->glCreateShader(shaderType);
-	LOG(LogType::CONSTRUC)<<"shader id:"<<id_i<<"\n";
+	string shaderTypeLiteral;
+	switch(shaderType){
+		case GL_VERTEX_SHADER	: shaderTypeLiteral = "VERTEX"; break;
+		case GL_GEOMETRY_SHADER	: shaderTypeLiteral = "GEOMETRY"; break;
+		case GL_FRAGMENT_SHADER	: shaderTypeLiteral = "FRAGMENT"; break;
+		case GL_COMPUTE_SHADER	: shaderTypeLiteral = "COMPUTE"; break;
+		default					: shaderTypeLiteral = "UNKNOWN"; break;
+	}
+	LOG(LogType::CONSTRUC)<<shaderTypeLiteral<<" SHADER id:"<<id_i<<"\n";
 	gl->glShaderSource(id_i, code_i.c_str());
 	gl->glCompileShader(id_i);
 	GLint succes;
@@ -118,7 +129,9 @@ Shader::Shader( const GLenum shaderType,
 		vector<char> source(length);
 		gl->glGetShaderSource(id_i, length, &length, source.data());
 		Delete();
-		LOG(LogType::ERROR)<<info.data()<<"\n\n"<<addLineNumbers(source.data());
+		LOG(LogType::ERROR)<<"----------------------------"<<shaderTypeLiteral<<" SHADER ERROR------------------\n"
+							<<info.data()<<"\n"<<addLineNumbers(source.data())
+							<<"----------------------------SHADER ERROR END----------------------------\n";
 	}
 }
 

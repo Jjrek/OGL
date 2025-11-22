@@ -9,6 +9,8 @@
 #include <memory>
 #include <string>
 
+using CompileFlags = ogl::Shader::CompileFlags;
+
 using ::testing::StrictMock;
 using ::testing::_;
 using ::testing::Return;
@@ -34,11 +36,11 @@ class shaders: public testing::Test{
 			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 		}
 
-		void createShader(const string code, const std::set<std::string>& compileFlags){
+		void createShader(const string code, const CompileFlags& compileFlags){
 			shader = std::make_unique<ogl::Shader>(shaderType, code, compileFlags, std::move(gl));
 		};
 
-		void init(const string code, const std::set<std::string>& compileFlags){
+		void init(const string code, const CompileFlags& compileFlags){
 			expectShaderInitializationAndDestruction();
 			shaderInitializationSucces();
 			createShader(code, compileFlags);
@@ -203,7 +205,7 @@ TEST_F(shaders, flag_negation_with_other_non_matches){
 class shadersIllformed: public shaders{
 	protected:
 
-		void init(const string code, const std::set<std::string>& compileFlags){
+		void init(const string code, const CompileFlags& compileFlags){
 			expectShaderInitializationAndDestruction();
 			shaderInitializationFail();
 			shaderInitializationFailHandling();
