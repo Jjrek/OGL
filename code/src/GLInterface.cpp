@@ -91,6 +91,7 @@ namespace ogl {
 	linkMat4(glProgramUniformMatrix4x3fv,	GLuint,program,GLint,location,GLsizei,count,const GLfloat*,value)
 	linkMat4(glProgramUniformMatrix4fv,	GLuint,program,GLint,location,GLsizei,count,const GLfloat*,value)
 	link2(glBindBuffer,GLenum,target,GLuint,buffer)
+	link1(glEnableVertexAttribArray,GLuint,index)
 	link6(glVertexAttribPointer,GLuint,index,GLint,size,GLenum,type,GLboolean,normalized,GLsizei,stride,const void*,pointer)
 	link5(glVertexAttribIPointer,GLuint,index,GLint,size,GLenum,type,GLsizei,stride,const void*,pointer)
 	link2(glVertexAttribDivisor,GLuint,index,GLuint,divisor)

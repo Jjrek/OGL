@@ -70,6 +70,12 @@ namespace ogl{
 	Attribute::Attribute(Params params, std::shared_ptr<GLInterface> interface)noexcept:
 		Buffered(params, interface){
 		LOG(LogType::CONSTRUC)<<"attribute address:"<<params.address<<"\n";
+		switch(params.variableType){
+			case GL_FLOAT_MAT4 : gl->glEnableVertexAttribArray(params.address+3); [[fallthrough]];
+			case GL_FLOAT_MAT3 : gl->glEnableVertexAttribArray(params.address+2); [[fallthrough]];
+			case GL_FLOAT_MAT2 : gl->glEnableVertexAttribArray(params.address+1); [[fallthrough]];
+			default 	:		 gl->glEnableVertexAttribArray(params.address); break;
+		}
 	}
 
 	Attribute::~Attribute(){

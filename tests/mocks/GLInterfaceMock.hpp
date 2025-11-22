@@ -59,6 +59,7 @@ class GLMock: public ogl::GLInterface{
 		MOCK_METHOD(void, glProgramUniformMatrix4x3fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
 		MOCK_METHOD(void, glProgramUniformMatrix4fv,	(GLuint program, GLint location, GLsizei count, const GLfloat* value), (override));
 		MOCK_METHOD(void, glBindBuffer,(GLenum target, GLuint buffer), (override));
+		MOCK_METHOD(void, glEnableVertexAttribArray,(GLuint index), (override));
 		MOCK_METHOD(void, glVertexAttribPointer, (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer), (override));
 		MOCK_METHOD(void, glVertexAttribIPointer, (GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer), (override));
 		MOCK_METHOD(void, glVertexAttribDivisor, (GLuint index, GLuint divisor), (override));

@@ -71,6 +71,7 @@ TEST_F(variable, uniform_mat_write){
 }
 
 TEST_F(variable, attribute_int_attach_buffer){
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address));
 	ogl::Attribute attribute{{address, GL_INT_VEC3, programId}, gl};
 	expectBufferBinding();
 	EXPECT_CALL(*gl, glVertexAttribIPointer(address,_,_,_,_)).Times(1);
@@ -78,6 +79,7 @@ TEST_F(variable, attribute_int_attach_buffer){
 }
 
 TEST_F(variable, attribute_non_int_attach_buffer){
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address));
 	ogl::Attribute attribute{{address, GL_FLOAT, programId}, gl};
 	expectBufferBinding();
 	EXPECT_CALL(*gl, glVertexAttribPointer(address,_,_,_,_,_)).Times(1);
@@ -85,6 +87,10 @@ TEST_F(variable, attribute_non_int_attach_buffer){
 }
 
 TEST_F(variable, attribute_matrix_attach_buffer){
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address+3));
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address+2));
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address+1));
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address));
 	ogl::Attribute attribute{{address, GL_FLOAT_MAT4, programId}, gl};
 	expectBufferBinding();
 	EXPECT_CALL(*gl, glVertexAttribPointer(address+3,_,_,_,_,_)).Times(1);
@@ -95,6 +101,7 @@ TEST_F(variable, attribute_matrix_attach_buffer){
 }
 
 TEST_F(variable, attribute_instanced_divisor){
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address));
 	ogl::Attribute attribute{{address, GL_INT, programId}, gl};
 	int divisor = 6;
 	EXPECT_CALL(*gl, glVertexAttribDivisor(address,divisor)).Times(1);
@@ -102,6 +109,9 @@ TEST_F(variable, attribute_instanced_divisor){
 }
 
 TEST_F(variable, attribute_matrix_instanced_divisor){
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address+2));
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address+1));
+	EXPECT_CALL(*gl, glEnableVertexAttribArray(address));
 	ogl::Attribute attribute{{address, GL_FLOAT_MAT3, programId}, gl};
 	int divisor = 6;
 	EXPECT_CALL(*gl, glVertexAttribDivisor(address+2,divisor)).Times(1);

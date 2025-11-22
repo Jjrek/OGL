@@ -82,6 +82,7 @@ class program: public testing::Test{
 			EXPECT_CALL(*gl, glBindVertexArray(VAO)).Times(1);
 			pollInfo(GL_UNIFORM, uniform);
 			pollInfo(GL_PROGRAM_INPUT, attribute);
+			EXPECT_CALL(*gl, glEnableVertexAttribArray(attribute.location));
 			pollInfo(GL_UNIFORM_BLOCK, UBO);
 			EXPECT_CALL(*gl, glGetUniformBlockIndex(programId,_)).WillOnce(Return(UBO.location));
 			pollInfo(GL_SHADER_STORAGE_BLOCK, SSBO);

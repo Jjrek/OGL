@@ -68,6 +68,7 @@ namespace ogl {
 			virtual void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
 			virtual void glProgramUniformMatrix4fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value) = 0;
 			virtual void glBindBuffer(GLenum target, GLuint buffer) = 0;
+			virtual void glEnableVertexAttribArray(GLuint index) = 0;
 			virtual void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer) = 0;
 			virtual void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer) = 0;
 			virtual void glVertexAttribDivisor(GLuint index, GLuint divisor) = 0;
@@ -137,6 +138,7 @@ namespace ogl {
 			void glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
 			void glProgramUniformMatrix4fv	(GLuint program, GLint location, GLsizei count, const GLfloat* value)final;
 			void glBindBuffer(GLenum target, GLuint buffer)final;
+			void glEnableVertexAttribArray(GLuint index)final;
 			void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer)final;
 			void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const void* pointer)final;
 			void glVertexAttribDivisor(GLuint index, GLuint divisor)final;
