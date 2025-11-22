@@ -82,10 +82,10 @@ namespace ogl{
 		LOG(LogType::DESTRUCT)<<"attribute address:"<<params.address<<"\n";
 	}
 
-	void Attribute::attachBuffer(std::shared_ptr<DataBuffer> buffer){
+	void Attribute::attachBuffer(DataBuffer& buffer){
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
-		unsigned bufferId = buffer->id();
+		unsigned bufferId = buffer.id();
 		gl->glBindBuffer(GL_ARRAY_BUFFER, bufferId);
 		LOG(LogType::INFO)<<"attribute:"
 							<<params.address
@@ -159,11 +159,11 @@ namespace ogl{
 			LOG(LogType::DESTRUCT)<<"ssbo address:"<<params.address<<"\n";
 	}
 
-	void Buffer_Block::attachBuffer(std::shared_ptr<DataBuffer> buffer){
+	void Buffer_Block::attachBuffer(DataBuffer& buffer){
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
 		GLuint& programId = params.programId;
-		unsigned bindingPoint = buffer->bindingPoint();
+		unsigned bindingPoint = buffer.bindingPoint();
 		switch(variableType){
 			case GL_UNIFORM_BLOCK :
 					LOG(LogType::INFO)<<"ubo:"

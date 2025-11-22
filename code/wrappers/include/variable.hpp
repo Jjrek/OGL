@@ -57,15 +57,12 @@ namespace ogl{
 			Buffered& operator=(const Buffered& old) = delete;
 			Buffered& operator=(Buffered&& old) = delete;
 
-		protected:
-			std::shared_ptr<DataBuffer> buffer;
-
 		public:
 			Buffered(Params params, std::shared_ptr<GLInterface> interface)noexcept;
 			virtual ~Buffered(){};
 
 			///@brief Connects contained variable with passed buffer
-			virtual void attachBuffer(std::shared_ptr<DataBuffer> buffer) = 0;
+			virtual void attachBuffer(DataBuffer& buffer) = 0;
 	};
 
 	///@brief Wrapper class containing attribute input
@@ -82,7 +79,7 @@ namespace ogl{
 			Attribute(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			~Attribute();
 
-			void attachBuffer(std::shared_ptr<DataBuffer> buffer)final;
+			void attachBuffer(DataBuffer& buffer)final;
 
 			///@brief Defines instance divisor for contained variable
 			void MakeAtributeInstanced(int divisor);
@@ -101,7 +98,7 @@ namespace ogl{
 			Buffer_Block(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			~Buffer_Block();
 
-			void attachBuffer(std::shared_ptr<DataBuffer> buffer)final;
+			void attachBuffer(DataBuffer& buffer)final;
 	};
 }
 
