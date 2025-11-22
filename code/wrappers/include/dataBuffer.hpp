@@ -37,6 +37,9 @@ namespace ogl {
 			///@brief Returns related binding point, attaches to next unused if not yet connected
 			virtual unsigned bindingPoint();
 
+			///@brief Binds buffer to passed target
+			void bind(GLenum target);
+
 			///@brief Appends data from passed vector to temporary buffer
 			template<typename T>void feed(std::vector<T> data){
 				feed(data.data(), sizeof(T)*data.size());}

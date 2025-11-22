@@ -29,6 +29,10 @@ namespace ogl {
 		return bindingPoint_i;
 	}
 
+	void DataBuffer::bind(GLenum target){
+		gl->glBindBuffer(target, id_i);
+	}
+
 	void DataBuffer::feed( void* pDataptr, size_t size){
 		if(pDataptr == nullptr)return;
 
