@@ -129,9 +129,12 @@ namespace ogl{
 	}
 
 	shared_ptr<Variable> Program::get(string varName){
-		if(variables.contains(varName))
+		if(variables.contains(varName)){
 			return variables[varName];
-		return {};
+		}else{
+			LOG(LogType::WRN)<<"Program "<<id<<" does not contain variable "<<varName<<"\n";
+			return {};
+		}
 	}
 
 }

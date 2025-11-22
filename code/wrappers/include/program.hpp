@@ -22,7 +22,6 @@ namespace ogl{
 
 			std::map<std::string, std::shared_ptr<Variable>> variables;
 
-			Program() = delete;
 			Program(const Program& old) = delete;
 			Program(Program&& old) = delete;
 			Program& operator=(const Program& old) = delete;
