@@ -52,6 +52,9 @@ namespace ogl {
 			///at 'offset' from begining, extends buffer if necessary
 			void feed( void* pDataptr, size_t size, unsigned long offset);
 
+			///@brief Passes data from passed vector to OpenGL buffer
+			template<typename T>void pass(std::vector<T> data){
+				pass(data.data(), sizeof(T)*data.size());}
 			///@brief Creates new OpenGL buffer storage with 'size' bytes of data from 'pDataptr'
 			void pass(void* pDataptr, size_t size);
 			///@brief Passes 'size' bytes from 'pDataptr' to OpenGL buffer with 'offset'
