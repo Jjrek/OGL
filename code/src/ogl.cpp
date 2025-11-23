@@ -9,7 +9,8 @@
 
 namespace ogl{
 
-	Ogl::Ogl()noexcept{
+	Ogl::Ogl(std::string windowTitle,
+			glm::uvec2 windowSize)noexcept{
 
 		isValid = true;
 
@@ -24,7 +25,7 @@ namespace ogl{
 			return;
 		}
 
-		window_i = std::make_shared<Window>();
+		window_i = std::make_shared<Window>(windowTitle, windowSize);
 		if(!window_i){
 			isValid = false;
 			LOG(LogType::ERROR)<<"Failed creating window\n";

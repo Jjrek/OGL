@@ -37,7 +37,8 @@ namespace ogl{
             Ogl& operator=(Ogl&& old) = delete;
 
         public:
-            Ogl()noexcept;
+            Ogl(std::string windowTitle = "title",
+                glm::uvec2 windowSize = {480,320})noexcept;
             ~Ogl();
 			operator bool(){return isValid;}
 

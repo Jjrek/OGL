@@ -22,7 +22,7 @@ namespace ogl {
 			Window& operator=(Window&& old) = delete;
 
 		public:
-			Window(std::string title = "title", glm::uvec2 size = {480,320})noexcept;
+			Window(std::string title, glm::uvec2 size)noexcept;
 			~Window();
 
 			operator bool(){return windowPtr;}
