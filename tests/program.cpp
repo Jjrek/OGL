@@ -2,10 +2,11 @@
 #include <gmock/gmock.h>
 
 #include "program.hpp"
+#include "log.hpp"
 
 #include "GLInterfaceMock.hpp"
 #include "shaderMock.hpp"
-#include "log.hpp"
+#include "objectFactoryMock.hpp"
 
 using ::testing::StrictMock;
 using ::testing::_;
@@ -36,6 +37,7 @@ class program: public testing::Test{
 		std::shared_ptr<ShaderMock> shader1;
 		std::shared_ptr<ShaderMock> shader2;
 		std::shared_ptr<GLMock> gl;
+		std::shared_ptr<ogl::Program> testProgram;
 
 		program(){
 			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
@@ -72,7 +74,12 @@ class program: public testing::Test{
 					[=](any,any,any,any,any,GLchar* name){memcpy(name, variable.name.c_str(), variable.name.length()+1);});
 		}
 
-		void buildingSucces(){
+		void create(){
+			ObjectFactoryMock factory;
+			testProgram = factory.createPointer<ogl::Program>(gl);
+		}
+
+		void succesfulBuild(){
 			building();
 			auto returnSucces = [](GLuint, GLenum, GLint* param){*param = 1;};
 			EXPECT_CALL(*gl, glGetProgramiv(programId, GL_LINK_STATUS, _)).WillOnce(returnSucces);
@@ -89,9 +96,10 @@ class program: public testing::Test{
 			EXPECT_CALL(*gl, glGetProgramResourceIndex(programId,GL_SHADER_STORAGE_BLOCK,_)).WillOnce(Return(SSBO.location));
 			auto assertVAO = [](GLuint, GLuint* param){EXPECT_EQ(*param,VAO);};
 			EXPECT_CALL(*gl, glDeleteVertexArrays(1,_)).WillOnce(assertVAO);
+			create();
 		}
 
-		void buildingFailure(){
+		void failedBuild(){
 			building();
 			auto returnFail = [](GLuint, GLenum, GLint* param){*param = 0;};
 			EXPECT_CALL(*gl, glGetProgramiv(programId, GL_LINK_STATUS, _)).WillOnce(returnFail);
@@ -103,64 +111,57 @@ class program: public testing::Test{
 			auto returnInfo = [=](GLuint, GLsizei len, GLsizei*, GLchar* text)
 				{memcpy(text, info.c_str(), fmin(il, len));};
 			EXPECT_CALL(*gl, glGetProgramInfoLog(programId, il, _, _)).WillOnce(returnInfo);
+			create();
 		}
 };
 
 TEST_F(program, building_failure){
-	buildingFailure();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_EQ(static_cast<bool>(p), false);
+	failedBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_EQ(static_cast<bool>(*testProgram), false);
 }
 
 TEST_F(program, building_succes){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_EQ(static_cast<bool>(p), true);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_EQ(static_cast<bool>(*testProgram), true);
 }
 
 TEST_F(program, activation){
-	buildingSucces();
+	succesfulBuild();
 	EXPECT_CALL(*gl, glUseProgram(programId)).Times(1).RetiresOnSaturation();
 	EXPECT_CALL(*gl, glBindVertexArray(VAO)).Times(1).RetiresOnSaturation();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	p.use();
+	testProgram->build({shader1, shader2});
+	testProgram->use();
 }
 
 TEST_F(program, variable_get_uniform){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_GT(p.get(uniform.name).use_count(), 0);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_GT(testProgram->get(uniform.name).use_count(), 0);
 }
 
 TEST_F(program, variable_get_attribute){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_GT(p.get(attribute.name).use_count(), 0);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_GT(testProgram->get(attribute.name).use_count(), 0);
 }
 
 TEST_F(program, variable_get_ubo){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_GT(p.get(UBO.name).use_count(), 0);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_GT(testProgram->get(UBO.name).use_count(), 0);
 }
 
 TEST_F(program, variable_get_ssbo){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_GT(p.get(SSBO.name).use_count(), 0);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_GT(testProgram->get(SSBO.name).use_count(), 0);
 }
 
 TEST_F(program, variable_get_fail){
-	buildingSucces();
-	ogl::Program p(gl);
-	p.build({shader1, shader2});
-	EXPECT_EQ(p.get("nonexistingname").use_count(), 0);
+	succesfulBuild();
+	testProgram->build({shader1, shader2});
+	EXPECT_EQ(testProgram->get("nonexistingname").use_count(), 0);
 }
 

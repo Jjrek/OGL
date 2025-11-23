@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <objectFactoryMock.hpp>
 
 #include "shader.hpp"
 
@@ -29,16 +30,17 @@ constexpr GLuint shaderId = 3;
 class shaders: public testing::Test{
 	protected:
 
-		std::unique_ptr<ogl::Shader> shader;
-		std::unique_ptr<GLMock> gl;
+		std::shared_ptr<ogl::Shader> shader;
+		std::shared_ptr<GLMock> gl;
 
-		shaders():gl(std::make_unique<StrictMock<GLMock>>()){
+		shaders():gl(std::make_shared<StrictMock<GLMock>>()){
 			ogl::Log::Handle().setLoggingFlags(ogl::LogType::NONE);
 		}
 
 		void createShader(const string code, const CompileFlags& compileFlags){
-			shader = std::make_unique<ogl::Shader>(shaderType, code, compileFlags, std::move(gl));
-		};
+			ObjectFactoryMock factory;
+			shader = factory.createPointer<ogl::Shader>(shaderType, code, compileFlags, gl);
+		}
 
 		void init(const string code, const CompileFlags& compileFlags){
 			expectShaderInitializationAndDestruction();

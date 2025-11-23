@@ -13,6 +13,7 @@ namespace ogl{
 
 	///@brief Wrapper class containing single OpenGL program
 	class Program{
+			friend class ObjectFactory;
 		private:
 			bool isValid;
 
@@ -30,9 +31,11 @@ namespace ogl{
 			void poll(GLenum resourceType, auto factory);
 			void pollVariables();
 
-		public:
+		protected:
 			///@param interface - Interface for OpenGL calls.
 			Program(std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
+
+		public:
 			~Program();
 			operator bool(){return isValid;}
 

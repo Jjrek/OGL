@@ -10,6 +10,7 @@ namespace ogl {
 
 	///@brief Wrapper class for OpenGL buffer
 	class DataBuffer{
+			friend class ObjectFactory;
 		private:
 			std::shared_ptr<GLInterface> gl;
 			GLuint id_i;
@@ -23,10 +24,12 @@ namespace ogl {
 			DataBuffer& operator=(const DataBuffer& old) = delete;
 			DataBuffer& operator=(DataBuffer&& old) = delete;
 
+		protected:
+			DataBuffer(std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
+
 		public:
 			GLenum memoryUsageHint;
 
-			DataBuffer(std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			virtual ~DataBuffer();
 
 			///@brief Getter for buffer id
