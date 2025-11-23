@@ -6,6 +6,7 @@ project( OGL )
 set( CMAKE_CXX_STANDARD 20 )
 set( CMAKE_CXX_STANDARD_REQUIRED True )
 set( CMAKE_BUILD_TYPE Release )
+set(CMAKE_EXPORT_COMPILE_COMMANDS OFF)
 
 
 #building library
@@ -28,6 +29,8 @@ target_include_directories( ${LIBRARY_BIN} PUBLIC ${OPENGL_INCLUDE_DIRS} )
 
 #tests
 add_subdirectory( tests EXCLUDE_FROM_ALL )
+#examples
+add_subdirectory( examples EXCLUDE_FROM_ALL )
 
 #documentation
 find_package( Doxygen )
