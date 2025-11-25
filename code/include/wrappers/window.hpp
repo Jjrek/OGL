@@ -31,6 +31,8 @@ namespace ogl {
 			void swap();
 			glm::uvec2 size(){return size_i;};
 			void resize(glm::uvec2 size);
+
+			GLFWwindow* ptr(){return windowPtr;}
 	};
 
 }
