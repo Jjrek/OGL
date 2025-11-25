@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <objectFactoryMock.hpp>
 
-#include "dataBuffer.hpp"
+#include "wrappers/dataBuffer.hpp"
 #include "log.hpp"
 
 #include "GLInterfaceMock.hpp"

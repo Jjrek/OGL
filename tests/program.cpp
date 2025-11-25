@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "program.hpp"
+#include "wrappers/program.hpp"
 #include "log.hpp"
 
 #include "GLInterfaceMock.hpp"

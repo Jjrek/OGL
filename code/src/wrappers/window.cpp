@@ -1,4 +1,4 @@
-#include "window.hpp"
+#include "wrappers/window.hpp"
 #include "log.hpp"
 
 #include <glm/glm.hpp>

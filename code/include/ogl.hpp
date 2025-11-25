@@ -1,7 +1,8 @@
 #ifndef INCLUDE_OGL_HPP_
 #define INCLUDE_OGL_HPP_
 
-#include "window.hpp"
+#include "./wrappers/window.hpp"
+#include "./wrappers/program.hpp"
 
 #include <memory>
 

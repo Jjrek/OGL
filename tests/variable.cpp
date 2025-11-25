@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "variable.hpp"
+#include "wrappers/variable.hpp"
 #include "log.hpp"
 
 #include "glm/glm.hpp"

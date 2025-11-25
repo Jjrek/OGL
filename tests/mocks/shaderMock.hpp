@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "shader.hpp"
+#include "wrappers/shader.hpp"
 #include "GLInterfaceMock.hpp"
 
 class ShaderMock: public ogl::Shader{

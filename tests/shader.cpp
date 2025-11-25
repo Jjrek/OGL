@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <objectFactoryMock.hpp>
 
-#include "shader.hpp"
+#include "wrappers/shader.hpp"
 
 #include "GLInterfaceMock.hpp"
 #include "log.hpp"
@@ -17,7 +17,6 @@ using ::testing::_;
 using ::testing::Return;
 using ::testing::Invoke;
 
-using std::unique_ptr;
 using std::string;
 
 const string line1 = "line1\n";

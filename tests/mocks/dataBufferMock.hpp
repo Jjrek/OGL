@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "dataBuffer.hpp"
+#include "wrappers/dataBuffer.hpp"
 #include "GLInterfaceMock.hpp"
 
 class DataBufferMock : public ogl::DataBuffer{

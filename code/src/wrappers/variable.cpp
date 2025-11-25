@@ -1,4 +1,4 @@
-#include "variable.hpp"
+#include "wrappers/variable.hpp"
 #include "log.hpp"
 
 namespace ogl{

@@ -1,6 +1,5 @@
 #include "log.hpp"
 #include "ogl.hpp"
-#include "program.hpp"
 
 using ogl::LogType;
 using CompileFlags = ogl::Shader::CompileFlags;
