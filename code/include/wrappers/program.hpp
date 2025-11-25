@@ -4,6 +4,7 @@
 #include "GLInterface.hpp"
 #include "shader.hpp"
 #include "variable.hpp"
+#include "log.hpp"
 
 #include <memory>
 #include <vector>
@@ -47,6 +48,18 @@ namespace ogl{
 
 			///@brief Returns stored variable wrapper or empty pointer if not found.
 			std::shared_ptr<Variable> get(std::string varName);
+
+			///@brief Returns stored variable wrapper with type casting or empty pointer if not found or not matching.
+			template<typename T>
+			std::shared_ptr<T> get(std::string varName){
+				auto p = std::dynamic_pointer_cast<T>(get(varName));
+				if(!p)LOG(ogl::LogType::WRN)<<"Program "
+										<<id
+										<<" does not contain variable "
+										<<varName
+										<<" or types not match\n";
+				return p;
+			}
 	};
 
 }

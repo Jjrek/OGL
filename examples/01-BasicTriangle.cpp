@@ -25,7 +25,7 @@ int main(){
 							p,-p,0,
 							0,p,0});
 
-	if(auto ptr = std::dynamic_pointer_cast<ogl::Buffered>(program.get("position")))
+	if(auto ptr = program.get<ogl::Attribute>("position"))
 		ptr->attachBuffer(positions);
 
 	glClearColor(0.02,0,0.04,1);
