@@ -1,6 +1,8 @@
 #include "wrappers/variable.hpp"
 #include "log.hpp"
 
+using std::shared_ptr;
+
 namespace ogl{
 
 	Variable::Variable(Params params, std::shared_ptr<GLInterface> interface)noexcept{
@@ -82,10 +84,11 @@ namespace ogl{
 		LOG(LogType::DESTRUCT)<<"attribute address:"<<params.address<<"\n";
 	}
 
-	void Attribute::attachBuffer(DataBuffer& buffer){
+	void Attribute::attachBuffer(shared_ptr<DataBuffer> bufferPtr){
+		Buffered::attachBuffer(bufferPtr);
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
-		unsigned bufferId = buffer.id();
+		unsigned bufferId = bufferPtr->id();
 		gl->glBindBuffer(GL_ARRAY_BUFFER, bufferId);
 		LOG(LogType::INFO)<<"attribute:"
 							<<params.address
@@ -159,11 +162,11 @@ namespace ogl{
 			LOG(LogType::DESTRUCT)<<"ssbo address:"<<params.address<<"\n";
 	}
 
-	void Buffer_Block::attachBuffer(DataBuffer& buffer){
+	void Buffer_Block::attachBuffer(shared_ptr<DataBuffer> bufferPtr){
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
 		GLuint& programId = params.programId;
-		unsigned bindingPoint = buffer.bindingPoint();
+		unsigned bindingPoint = bufferPtr->bindingPoint();
 		switch(variableType){
 			case GL_UNIFORM_BLOCK :
 					LOG(LogType::INFO)<<"ubo:"

@@ -2,7 +2,6 @@
 #include "ogl.hpp"
 
 using ogl::LogType;
-using CompileFlags = ogl::Shader::CompileFlags;
 
 int main(){
 
@@ -20,9 +19,9 @@ int main(){
 					factory->createPointer<ogl::ShaderFromFile>(
 							GL_FRAGMENT_SHADER, "./shaders/fragment.glsl")});
 
-	ogl::DataBuffer positions = factory->create<ogl::DataBuffer>();
+	std::shared_ptr<ogl::DataBuffer> positions = factory->createPointer<ogl::DataBuffer>();
 	constexpr float p = 0.8f;
-	positions.pass<float>({-p,-p,0,
+	positions->pass<float>({-p,-p,0,
 							p,-p,0,
 							0,p,0});
 

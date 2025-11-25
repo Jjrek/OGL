@@ -51,6 +51,8 @@ namespace ogl{
 	///@brief Base for buffer backed OpenGL program input
 	class Buffered : public Variable{
 		private:
+			std::shared_ptr<DataBuffer> buffer;
+
 			Buffered() = delete;
 			Buffered(const Buffered& old) = delete;
 			Buffered(Buffered&& old) = delete;
@@ -62,7 +64,11 @@ namespace ogl{
 			virtual ~Buffered(){};
 
 			///@brief Connects contained variable with passed buffer
-			virtual void attachBuffer(DataBuffer& buffer) = 0;
+			virtual void attachBuffer(std::shared_ptr<DataBuffer> bufferPtr){buffer = bufferPtr;};
+
+			///@brief Removes linked buffer from variable,
+			///does not affect OpenGL state
+			void detachBuffer(){ buffer.reset(); };
 	};
 
 	///@brief Wrapper class containing attribute input
@@ -79,7 +85,7 @@ namespace ogl{
 			Attribute(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			~Attribute();
 
-			void attachBuffer(DataBuffer& buffer)final;
+			void attachBuffer(std::shared_ptr<DataBuffer> bufferPtr)final;
 
 			///@brief Defines instance divisor for contained variable
 			void MakeAtributeInstanced(int divisor);
@@ -98,7 +104,7 @@ namespace ogl{
 			Buffer_Block(Params params, std::shared_ptr<GLInterface> interface = std::make_unique<GL>())noexcept;
 			~Buffer_Block();
 
-			void attachBuffer(DataBuffer& buffer)final;
+			void attachBuffer(std::shared_ptr<DataBuffer> bufferPtr)final;
 	};
 }
 
