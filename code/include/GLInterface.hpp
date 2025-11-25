@@ -1,5 +1,5 @@
-#ifndef INCLUDE_GLINTERFACE_HPP_
-#define INCLUDE_GLINTERFACE_HPP_
+#ifndef INCLUDE_OGL_GLINTERFACE_HPP_
+#define INCLUDE_OGL_GLINTERFACE_HPP_
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -147,4 +147,4 @@ namespace ogl {
 	};
 
 }
-#endif // INCLUDE_GLINTERFACE_HPP_
+#endif // INCLUDE_OGL_GLINTERFACE_HPP_

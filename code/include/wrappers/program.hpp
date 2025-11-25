@@ -1,5 +1,5 @@
-#ifndef INCLUDE_PROGRAM_HPP_
-#define INCLUDE_PROGRAM_HPP_
+#ifndef INCLUDE_OGL_PROGRAM_HPP_
+#define INCLUDE_OGL_PROGRAM_HPP_
 
 #include "GLInterface.hpp"
 #include "shader.hpp"
@@ -63,4 +63,4 @@ namespace ogl{
 	};
 
 }
-#endif // INCLUDE_PROGRAM_HPP_
+#endif // INCLUDE_OGL_PROGRAM_HPP_

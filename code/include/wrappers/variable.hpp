@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ENTRY_HPP_
-#define INCLUDE_ENTRY_HPP_
+#ifndef INCLUDE_OGL_VARIABLE_HPP_
+#define INCLUDE_OGL_VARIABLE_HPP_
 
 #include "dataBuffer.hpp"
 
@@ -108,4 +108,4 @@ namespace ogl{
 	};
 }
 
-#endif // INCLUDE_ENTRY_HPP_
+#endif // INCLUDE_OGL_VARIABLE_HPP_

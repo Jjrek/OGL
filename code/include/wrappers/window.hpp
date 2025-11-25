@@ -1,5 +1,5 @@
-#ifndef INCLUDE_WINDOW_HPP_
-#define INCLUDE_WINDOW_HPP_
+#ifndef INCLUDE_OGL_WINDOW_HPP_
+#define INCLUDE_OGL_WINDOW_HPP_
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -37,4 +37,4 @@ namespace ogl {
 
 }
 
-#endif // INCLUDE_WINDOW_HPP_
+#endif // INCLUDE_OGL_WINDOW_HPP_

@@ -1,5 +1,5 @@
-#ifndef INCLUDE_LOG_HPP_
-#define INCLUDE_LOG_HPP_
+#ifndef INCLUDE_OGL_LOG_HPP_
+#define INCLUDE_OGL_LOG_HPP_
 
 #include <iostream>
 
@@ -62,4 +62,4 @@ namespace ogl{
 	std::ostream& LOG(const LogType);
 
 }
-#endif // INCLUDE_LOG_HPP_
+#endif // INCLUDE_OGL_LOG_HPP_

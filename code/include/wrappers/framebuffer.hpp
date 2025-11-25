@@ -1,5 +1,5 @@
-#ifndef INCLUDE_FRAMEBUFFER_HPP_
-#define INCLUDE_FRAMEBUFFER_HPP_
+#ifndef INCLUDE_OGL_FRAMEBUFFER_HPP_
+#define INCLUDE_OGL_FRAMEBUFFER_HPP_
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -32,4 +32,4 @@ namespace ogl {
 
 }
 
-#endif // INCLUDE_FRAMEBUFFER_HPP_
+#endif // INCLUDE_OGL_FRAMEBUFFER_HPP_

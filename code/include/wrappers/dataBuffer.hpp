@@ -1,5 +1,5 @@
-#ifndef INCLUDE_DATA_BUFFER_HPP_
-#define INCLUDE_DATA_BUFFER_HPP_
+#ifndef INCLUDE_OGL_DATA_BUFFER_HPP_
+#define INCLUDE_OGL_DATA_BUFFER_HPP_
 
 #include "GLInterface.hpp"
 
@@ -68,4 +68,4 @@ namespace ogl {
 	};
 }
 
-#endif // INCLUDE_DATA_BUFFER_HPP_
+#endif // INCLUDE_OGL_DATA_BUFFER_HPP_

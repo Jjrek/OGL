@@ -1,5 +1,5 @@
-#ifndef INCLUDE_SHADER_HPP_
-#define INCLUDE_SHADER_HPP_
+#ifndef INCLUDE_OGL_SHADER_HPP_
+#define INCLUDE_OGL_SHADER_HPP_
 
 #include "GLInterface.hpp"
 
@@ -117,4 +117,4 @@ namespace ogl{
 
 }
 
-#endif // INCLUDE_SHADER_HPP_
+#endif // INCLUDE_OGL_SHADER_HPP_
