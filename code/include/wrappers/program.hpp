@@ -44,7 +44,7 @@ namespace ogl{
 			bool build(const std::vector<std::shared_ptr<Shader>>& shaders);
 
 			///@brief Activates program.
-			void use();
+			void activate();
 
 			///@brief Returns stored variable wrapper or empty pointer if not found.
 			std::shared_ptr<Variable> get(std::string varName);

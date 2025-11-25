@@ -123,7 +123,7 @@ namespace ogl{
 													params.programId}, gl);});
 	}
 
-	void Program::use(){
+	void Program::activate(){
 		gl->glUseProgram(id);
 		gl->glBindVertexArray(vertexArrayID);
 	}

@@ -132,7 +132,7 @@ TEST_F(program, activation){
 	EXPECT_CALL(*gl, glUseProgram(programId)).Times(1).RetiresOnSaturation();
 	EXPECT_CALL(*gl, glBindVertexArray(VAO)).Times(1).RetiresOnSaturation();
 	testProgram->build({shader1, shader2});
-	testProgram->use();
+	testProgram->activate();
 }
 
 TEST_F(program, variable_get_uniform){
