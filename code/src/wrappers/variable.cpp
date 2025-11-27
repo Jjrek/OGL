@@ -166,21 +166,28 @@ namespace ogl{
 		GLuint& address = params.address;
 		GLint& variableType = params.variableType;
 		GLuint& programId = params.programId;
-		unsigned bindingPoint = bufferPtr->bindingPoint();
+		unsigned bindingPoint;
+		unsigned bufferId = bufferPtr->id();
 		switch(variableType){
 			case GL_UNIFORM_BLOCK :
+					bindingPoint = bufferPtr->bindingPoint(GL_UNIFORM_BUFFER);
 					LOG(LogType::INFO)<<"ubo:"
 										<<params.address
 										<<" attaching to binding:"
 										<<bindingPoint
+										<<" from buffer:"
+										<<bufferId
 										<<"\n";
 					gl->glUniformBlockBinding(programId, address, bindingPoint);
 					break;
 			case GL_SHADER_STORAGE_BLOCK :
+					bindingPoint = bufferPtr->bindingPoint(GL_SHADER_STORAGE_BUFFER);
 					LOG(LogType::INFO)<<"ssbo:"
 										<<params.address
 										<<" attaching to binding:"
 										<<bindingPoint
+										<<" from buffer:"
+										<<bufferId
 										<<"\n";
 					gl->glShaderStorageBlockBinding(programId, address, bindingPoint);
 					break;

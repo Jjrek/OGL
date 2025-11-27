@@ -38,6 +38,7 @@ namespace ogl {
 	//Buffer functions
 	link2(glCreateBuffers,GLsizei,n,GLuint*,buffer)
 	link2(glDeleteBuffers,GLsizei,n,GLuint*,buffer)
+	link3(glBindBufferBase,GLenum,target,GLuint,index,GLuint,buffer)
 	link4(glNamedBufferData,GLuint,buffer,GLsizeiptr,size,const void*,data,GLenum,usage)
 	link4(glNamedBufferSubData,GLuint,buffer,GLintptr,offset,GLsizeiptr,size,const void*,data)
 

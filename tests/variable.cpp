@@ -122,14 +122,16 @@ TEST_F(variable, attribute_matrix_instanced_divisor){
 
 TEST_F(variable, ubo_attach_buffer){
 	ogl::Buffer_Block ubo{{address, GL_UNIFORM_BLOCK, programId}, gl};
-	EXPECT_CALL(*buffer, bindingPoint()).WillOnce(Return(bufferBindingPoint));
+	EXPECT_CALL(*buffer, bindingPoint(GL_UNIFORM_BUFFER)).WillOnce(Return(bufferBindingPoint));
+	EXPECT_CALL(*buffer, id()).WillOnce(Return(bufferId));
 	EXPECT_CALL(*gl, glUniformBlockBinding(programId,address,bufferBindingPoint)).Times(1);
 	ubo.attachBuffer(buffer);
 }
 
 TEST_F(variable, ssbo_attach_buffer){
 	ogl::Buffer_Block ssbo{{address, GL_SHADER_STORAGE_BLOCK, programId}, gl};
-	EXPECT_CALL(*buffer, bindingPoint()).WillOnce(Return(bufferBindingPoint));
+	EXPECT_CALL(*buffer, bindingPoint(GL_SHADER_STORAGE_BUFFER)).WillOnce(Return(bufferBindingPoint));
+	EXPECT_CALL(*buffer, id()).WillOnce(Return(bufferId));
 	EXPECT_CALL(*gl, glShaderStorageBlockBinding(programId,address,bufferBindingPoint)).Times(1);
 	ssbo.attachBuffer(buffer);
 }

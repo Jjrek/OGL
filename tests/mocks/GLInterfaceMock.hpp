@@ -17,6 +17,7 @@ class GLMock: public ogl::GLInterface{
 
 		MOCK_METHOD(void, glCreateBuffers,(GLsizei n, GLuint* buffer), (override));
 		MOCK_METHOD(void, glDeleteBuffers,(GLsizei n, GLuint* buffer), (override));
+		MOCK_METHOD(void, glBindBufferBase,(GLenum target, GLuint index, GLuint buffer), (override));
 		MOCK_METHOD(void, glNamedBufferData,(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage), (override));
 		MOCK_METHOD(void, glNamedBufferSubData,(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data), (override));
 

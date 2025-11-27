@@ -17,7 +17,8 @@ namespace ogl {
 			char* data_i;
 			size_t size_i;
 
-			int bindingPoint_i;
+			int uboBindingPoint_i;
+			int ssboBindingPoint_i;
 
 			DataBuffer(const DataBuffer& old) = delete;
 			DataBuffer(DataBuffer&& old) = delete;
@@ -38,7 +39,8 @@ namespace ogl {
 			GLuint size(){return size_i;}
 
 			///@brief Returns related binding point, attaches to next unused if not yet connected
-			virtual unsigned bindingPoint();
+			///@param target - target for which binding point should be returned, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER are accepted
+			virtual unsigned bindingPoint(GLenum target);
 
 			///@brief Binds buffer to passed target
 			void bind(GLenum target);

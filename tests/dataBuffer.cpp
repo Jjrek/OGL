@@ -49,22 +49,43 @@ class dataBuffer: public testing::Test{
 			EXPECT_CALL(*gl, glNamedBufferSubData(bufferId,offset,size,_)).WillOnce(
 					[=](any,any,long size,const void* ptr){EXPECT_TRUE(memcmp(buffer,ptr,size)==0);});
 		}
+
+		void expectBufferBinding(GLenum target, GLuint bindingPoint, GLuint buffer){
+			EXPECT_CALL(*gl, glBindBufferBase(target,bindingPoint,buffer)).Times(1);
+		}
 };
 
 TEST_F(dataBuffer, creation){
 	creationAndDestruction();
 }
 
+TEST_F(dataBuffer, ubo_and_ssbo_bindings_separation){
+	creationAndDestruction(3);
+	std::shared_ptr<DataBuffer> buffer1 = createBuffer();
+	std::shared_ptr<DataBuffer> buffer2 = createBuffer();
+	expectBufferBinding(GL_UNIFORM_BUFFER, 0, buffer->id());
+	EXPECT_EQ(buffer->bindingPoint(GL_UNIFORM_BUFFER), 0);
+	expectBufferBinding(GL_UNIFORM_BUFFER, 1, buffer2->id());
+	EXPECT_EQ(buffer2->bindingPoint(GL_UNIFORM_BUFFER), 1);
+
+	expectBufferBinding(GL_SHADER_STORAGE_BUFFER, 0, buffer1->id());
+	EXPECT_EQ(buffer1->bindingPoint(GL_SHADER_STORAGE_BUFFER), 0);
+}
+
 TEST_F(dataBuffer, binding_point_initialized_and_kept){
 	creationAndDestruction(3);
 	std::shared_ptr<DataBuffer> buffer1 = createBuffer();
 	std::shared_ptr<DataBuffer> buffer2 = createBuffer();
-	EXPECT_EQ(buffer->bindingPoint(), 0);
-	EXPECT_EQ(buffer1->bindingPoint(), 1);
-	EXPECT_EQ(buffer2->bindingPoint(), 2);
-	EXPECT_EQ(buffer->bindingPoint(), 0);
-	EXPECT_EQ(buffer1->bindingPoint(), 1);
-	EXPECT_EQ(buffer2->bindingPoint(), 2);
+	expectBufferBinding(GL_UNIFORM_BUFFER, 2, buffer->id());
+	EXPECT_EQ(buffer->bindingPoint(GL_UNIFORM_BUFFER), 2);
+	expectBufferBinding(GL_UNIFORM_BUFFER, 3, buffer1->id());
+	EXPECT_EQ(buffer1->bindingPoint(GL_UNIFORM_BUFFER), 3);
+	expectBufferBinding(GL_UNIFORM_BUFFER, 4, buffer2->id());
+	EXPECT_EQ(buffer2->bindingPoint(GL_UNIFORM_BUFFER), 4);
+
+	EXPECT_EQ(buffer->bindingPoint(GL_UNIFORM_BUFFER), 2);
+	EXPECT_EQ(buffer1->bindingPoint(GL_UNIFORM_BUFFER), 3);
+	EXPECT_EQ(buffer2->bindingPoint(GL_UNIFORM_BUFFER), 4);
 }
 
 TEST_F(dataBuffer, pass_to_buffer){

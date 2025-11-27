@@ -23,6 +23,7 @@ namespace ogl {
 			//Buffer functions
 			virtual void glCreateBuffers(GLsizei n, GLuint* buffer) = 0;
 			virtual void glDeleteBuffers(GLsizei n, GLuint* buffer) = 0;
+			virtual void glBindBufferBase(GLenum target, GLuint index, GLuint buffer) = 0;
 			virtual void glNamedBufferData(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage) = 0;
 			virtual void glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data) = 0;
 
@@ -93,6 +94,7 @@ namespace ogl {
 			//Buffer functions
 			void glCreateBuffers(GLsizei n, GLuint* buffer)final;
 			void glDeleteBuffers(GLsizei n, GLuint* buffer)final;
+			void glBindBufferBase(GLenum target, GLuint index, GLuint buffer)final;
 			void glNamedBufferData(GLuint buffer, GLsizeiptr size, const void *data, GLenum usage)final;
 			void glNamedBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr size, const void *data)final;
 
