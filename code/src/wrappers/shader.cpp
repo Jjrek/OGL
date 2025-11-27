@@ -105,7 +105,7 @@ namespace ogl{
 		isValid = !code_i.empty();
 		if(!isValid) return;
 
-		type = shaderType;
+		type_i = shaderType;
 		id_i = gl->glCreateShader(shaderType);
 		string shaderTypeLiteral;
 		switch(shaderType){

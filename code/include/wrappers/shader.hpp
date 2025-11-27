@@ -19,7 +19,7 @@ namespace ogl{
 
 			std::shared_ptr<GLInterface> gl;
 
-			GLenum type;
+			GLenum type_i;
 			GLuint id_i;
 
 			Shader() = delete;
@@ -66,6 +66,9 @@ namespace ogl{
 
 			///@brief OpenGl shader id getter
 			virtual GLuint id()const{return id_i;};
+
+			///@brief Shader type getter
+			virtual GLenum type()const{return type_i;};
 
 			///@brief Returns code that was passed to OpenGL.
 			std::string code()const{return code_i;}

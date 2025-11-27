@@ -16,6 +16,7 @@ namespace ogl{
 		gl = interface;
 		isValid = false;
 		id = gl->glCreateProgram();
+		vertexArrayID = 0;
 		LOG(LogType::CONSTRUC)<<"program id:"<<id<<"\n";
 	}
 
@@ -30,7 +31,9 @@ namespace ogl{
 
 	bool Program::build(const vector<shared_ptr<Shader>>& shaders){
 
+		bool computeProgram = false;
 		for(auto shader: shaders){
+			if(shader->type() == GL_COMPUTE_SHADER) computeProgram = true;
 			unsigned shaderId = shader->id();
 			gl->glAttachShader(id, shaderId);
 			LOG(LogType::INFO)<<"Attaching shader:"
@@ -60,8 +63,11 @@ namespace ogl{
 		isValid = true;
 
 		gl->glUseProgram(id);
-		gl->glGenVertexArrays(1, &vertexArrayID);
-		LOG(LogType::CONSTRUC)<<"vao id:"<<vertexArrayID<<"\n";
+
+		if(!computeProgram){
+			gl->glGenVertexArrays(1, &vertexArrayID);
+			LOG(LogType::CONSTRUC)<<"vao id:"<<vertexArrayID<<"\n";
+		}
 		gl->glBindVertexArray(vertexArrayID);
 
 		pollVariables();
@@ -75,6 +81,7 @@ namespace ogl{
 		GLint& nameLen = properties[0];
 		GLint& type = properties[1];
 		GLint& address = properties[2];
+		address = 0;
 		int enumCount = (resourceType == GL_UNIFORM || resourceType == GL_PROGRAM_INPUT)?
 						3:1;
 
@@ -97,10 +104,12 @@ namespace ogl{
 									nameLen,
 									&nameLen,
 									name.data());
-
-			string name_s(name.data());
-			variables[name_s] =
-				factory(name_s, {static_cast<GLuint>(address), type, id});
+			if(address >= 0){
+				string name_s(name.data());
+				LOG(LogType::CONSTRUC)<<name_s<<" ";
+				variables[name_s] =
+					factory(name_s, {static_cast<GLuint>(address), type, id});
+			}
 		}
 	}
 
