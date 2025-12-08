@@ -15,4 +15,5 @@ function(compileExample NAME )
 endfunction()
 
 compileExample( 01-BasicTriangle )
+compileExample( 02-RotatingCube )
 

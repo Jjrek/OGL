@@ -15,9 +15,9 @@ int main(){
 	ogl::Program program = factory->create<ogl::Program>();
 
 	program.build({factory->createPointer<ogl::ShaderFromFile>(
-							GL_VERTEX_SHADER, "./shaders/vertex.glsl"),
+							GL_VERTEX_SHADER, "./shaders/01/vertex.glsl"),
 					factory->createPointer<ogl::ShaderFromFile>(
-							GL_FRAGMENT_SHADER, "./shaders/fragment.glsl")});
+							GL_FRAGMENT_SHADER, "./shaders/01/fragment.glsl")});
 
 	std::shared_ptr<ogl::DataBuffer> positions = factory->createPointer<ogl::DataBuffer>();
 	constexpr float p = 0.8f;
