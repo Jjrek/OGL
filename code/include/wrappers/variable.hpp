@@ -45,7 +45,7 @@ namespace ogl{
 			~Uniform();
 
 			///@brief Writes to contained variable
-			void pass(void* pDataptr);
+			void pass(const void* const pDataptr)const;
 	};
 
 	///@brief Base for buffer backed OpenGL program input

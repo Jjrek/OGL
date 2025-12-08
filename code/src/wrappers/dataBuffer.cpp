@@ -47,7 +47,7 @@ namespace ogl {
 		gl->glBindBuffer(target, id_i);
 	}
 
-	void DataBuffer::feed( void* pDataptr, size_t size){
+	void DataBuffer::feed(const void* const pDataptr, size_t size){
 		if(pDataptr == nullptr)return;
 
 		char* newArray = new char[(DataBuffer::size_i+size)];
@@ -60,7 +60,7 @@ namespace ogl {
 		data_i = newArray;
 	}
 
-	void DataBuffer::feed( void* pDataptr, size_t size, unsigned long offset){
+	void DataBuffer::feed(const void* const pDataptr, size_t size, unsigned long offset){
 		if(pDataptr == nullptr)return;
 
 		if(offset+size > size_i){
@@ -82,15 +82,15 @@ namespace ogl {
 		}
 	}
 
-	void DataBuffer::pass(void* pDataptr, size_t size){
+	void DataBuffer::pass(const void* const pDataptr, size_t size )const{
 		gl->glNamedBufferData(id_i, size, pDataptr, memoryUsageHint);
 	}
 
-	void DataBuffer::pass(void* pDataptr, size_t size, unsigned long offset){
+	void DataBuffer::pass(const void* const pDataptr, size_t size, unsigned long offset)const{
 		gl->glNamedBufferSubData(id_i, offset, size, pDataptr);
 	}
 
-	void DataBuffer::push(){
+	void DataBuffer::push()const{
 		pass(data_i, size_i);
 	}
 

@@ -20,45 +20,45 @@ namespace ogl{
 		LOG(LogType::DESTRUCT)<<"uniform address:"<<params.address<<"\n";
 	}
 
-	void Uniform::pass(void* pDataptr){
-		GLuint& address = params.address;
-		GLint& variableType = params.variableType;
-		GLuint& programId = params.programId;
+	void Uniform::pass(const void* const pDataptr)const{
+		const GLuint& address = params.address;
+		const GLint& variableType = params.variableType;
+		const GLuint& programId = params.programId;
 		switch(variableType){
-			case  GL_SAMPLER_1D 									: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_1D_SHADOW								: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_1D_ARRAY								: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_1D_ARRAY_SHADOW						: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_2D										: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_2D_SHADOW								: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_2D_ARRAY								: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_2D_ARRAY_SHADOW						: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_3D										: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_CUBE									: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_CUBE_SHADOW							: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_CUBE_MAP_ARRAY 						: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_SAMPLER_CUBE_MAP_ARRAY_SHADOW 					: gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_INT				                            : gl->glProgramUniform1iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_INT_VEC2 			                            : gl->glProgramUniform2iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_INT_VEC3 			                            : gl->glProgramUniform3iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_INT_VEC4 			                            : gl->glProgramUniform4iv(programId, address, 1, static_cast<GLint*>( pDataptr)); break;
-			case  GL_UNSIGNED_INT		                            : gl->glProgramUniform1uiv(programId, address, 1, static_cast<GLuint*>( pDataptr)); break;
-			case  GL_UNSIGNED_INT_VEC2	                            : gl->glProgramUniform2uiv(programId, address, 1, static_cast<GLuint*>( pDataptr)); break;
-			case  GL_UNSIGNED_INT_VEC3                              : gl->glProgramUniform3uiv(programId, address, 1, static_cast<GLuint*>( pDataptr)); break;
-			case  GL_UNSIGNED_INT_VEC4                              : gl->glProgramUniform4uiv(programId, address, 1, static_cast<GLuint*>( pDataptr)); break;
-			case  GL_FLOAT			                                : gl->glProgramUniform1fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_VEC2 	                                : gl->glProgramUniform2fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_VEC3 	                                : gl->glProgramUniform3fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_VEC4 	                                : gl->glProgramUniform4fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT2 	                                : gl->glProgramUniformMatrix2fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT2x3 	                                : gl->glProgramUniformMatrix2x3fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT2x4 	                                : gl->glProgramUniformMatrix2x4fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT3x2 	                                : gl->glProgramUniformMatrix3x2fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT3 	                                : gl->glProgramUniformMatrix3fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT3x4 	                                : gl->glProgramUniformMatrix3x4fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT4x2 	                                : gl->glProgramUniformMatrix4x2fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT4x3 	                                : gl->glProgramUniformMatrix4x3fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
-			case  GL_FLOAT_MAT4 	                                : gl->glProgramUniformMatrix4fv(programId, address, 1, static_cast<GLfloat*>( pDataptr)); break;
+			case  GL_SAMPLER_1D 									: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_1D_SHADOW								: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_1D_ARRAY								: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_1D_ARRAY_SHADOW						: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_2D										: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_2D_SHADOW								: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_2D_ARRAY								: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_2D_ARRAY_SHADOW						: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_3D										: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_CUBE									: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_CUBE_SHADOW							: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_CUBE_MAP_ARRAY 						: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_SAMPLER_CUBE_MAP_ARRAY_SHADOW 					: gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_INT				                            : gl->glProgramUniform1iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_INT_VEC2 			                            : gl->glProgramUniform2iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_INT_VEC3 			                            : gl->glProgramUniform3iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_INT_VEC4 			                            : gl->glProgramUniform4iv(programId, address, 1, static_cast<const GLint*>( pDataptr)); break;
+			case  GL_UNSIGNED_INT		                            : gl->glProgramUniform1uiv(programId, address, 1, static_cast<const GLuint*>( pDataptr)); break;
+			case  GL_UNSIGNED_INT_VEC2	                            : gl->glProgramUniform2uiv(programId, address, 1, static_cast<const GLuint*>( pDataptr)); break;
+			case  GL_UNSIGNED_INT_VEC3                              : gl->glProgramUniform3uiv(programId, address, 1, static_cast<const GLuint*>( pDataptr)); break;
+			case  GL_UNSIGNED_INT_VEC4                              : gl->glProgramUniform4uiv(programId, address, 1, static_cast<const GLuint*>( pDataptr)); break;
+			case  GL_FLOAT			                                : gl->glProgramUniform1fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_VEC2 	                                : gl->glProgramUniform2fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_VEC3 	                                : gl->glProgramUniform3fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_VEC4 	                                : gl->glProgramUniform4fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT2 	                                : gl->glProgramUniformMatrix2fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT2x3 	                                : gl->glProgramUniformMatrix2x3fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT2x4 	                                : gl->glProgramUniformMatrix2x4fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT3x2 	                                : gl->glProgramUniformMatrix3x2fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT3 	                                : gl->glProgramUniformMatrix3fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT3x4 	                                : gl->glProgramUniformMatrix3x4fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT4x2 	                                : gl->glProgramUniformMatrix4x2fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT4x3 	                                : gl->glProgramUniformMatrix4x3fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
+			case  GL_FLOAT_MAT4 	                                : gl->glProgramUniformMatrix4fv(programId, address, 1, static_cast<const GLfloat*>( pDataptr)); break;
 			default              	                                : break;
 		}
 	}

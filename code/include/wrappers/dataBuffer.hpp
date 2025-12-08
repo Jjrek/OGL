@@ -46,24 +46,30 @@ namespace ogl {
 			void bind(GLenum target);
 
 			///@brief Appends data from passed vector to temporary buffer
-			template<typename T>void feed(std::vector<T> data){
+			template<typename T>void feed(const std::vector<T>& data){
+				feed(data.data(), sizeof(T)*data.size());}
+			///@brief Appends data from passed array to temporary buffer
+			template<typename T, size_t N>void feed(const std::array<T, N>& data){
 				feed(data.data(), sizeof(T)*data.size());}
 			///@brief Appends 'size' bytes from 'pDataptr' to temporary buffer
-			void feed( void* pDataptr, size_t size);
+			void feed(const void* const  pDataptr, size_t size);
 			///@brief Copies 'size' bytes from 'pDataptr' to temporary buffer
 			///at 'offset' from begining, extends buffer if necessary
-			void feed( void* pDataptr, size_t size, unsigned long offset);
+			void feed(const void* const pDataptr, size_t size, unsigned long offset);
 
 			///@brief Passes data from passed vector to OpenGL buffer
-			template<typename T>void pass(std::vector<T> data){
+			template<typename T>void pass(const std::vector<T>& data)const{
+				pass(data.data(), sizeof(T)*data.size());}
+			///@brief Passes data from passed array to OpenGL buffer
+			template<typename T, size_t N>void pass(const std::array<T, N>& data)const{
 				pass(data.data(), sizeof(T)*data.size());}
 			///@brief Creates new OpenGL buffer storage with 'size' bytes of data from 'pDataptr'
-			void pass(void* pDataptr, size_t size);
+			void pass(const void* const pDataptr, size_t size)const;
 			///@brief Passes 'size' bytes from 'pDataptr' to OpenGL buffer with 'offset'
-			void pass(void* pDataptr, size_t size, unsigned long offset);
+			void pass(const void* const pDataptr, size_t size, unsigned long offset)const;
 
 			///@brief Creates new OpenGL buffer storage with data from temporary buffer
-			void push();
+			void push()const;
 
 			///@brief Clears temporary buffer
 			void clear();
