@@ -1,6 +1,7 @@
 #include "wrappers/shader.hpp"
 #include "log.hpp"
 
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -11,6 +12,7 @@
 using CompileFlags = ogl::Shader::CompileFlags;
 
 using std::istringstream;
+using std::ifstream;
 using std::string;
 using std::getline;
 using std::set;
@@ -47,10 +49,17 @@ namespace ogl{
 		string processedCode, processedLine;
 		int mismatchedBlocks = 0;
 
+		bool afterEmptyLine = true;
 		for(string line; getline(codeStream, line);){
 			//remove indentation
 			size_t start = line.find_first_not_of(" \t");
-			if(start == string::npos)continue;
+			if(start == string::npos){
+				if(!afterEmptyLine){
+					processedCode += '\n';
+					afterEmptyLine = true;
+				}
+				continue;
+			}
 			processedLine = line.substr(start);
 			std::replace(processedLine.begin(), processedLine.end(), '\t', ' ');
 
@@ -79,7 +88,10 @@ namespace ogl{
 					}
 				}
 			}else{
-				if(mismatchedBlocks == 0)processedCode += line+'\n';
+				if(mismatchedBlocks == 0){
+					processedCode += line+'\n';
+					afterEmptyLine = false;
+				}
 			}
 		}
 		return processedCode;
@@ -148,6 +160,45 @@ namespace ogl{
 		if(isValid){
 			Delete();
 		}
+	}
+
+
+	string ShaderFromFile::readFile(string path){
+		ifstream codeStream{path};
+		if(!codeStream){
+			LOG(LogType::ERROR)<<"Incorrect shader file:"<<std::quoted(path)<<'\n';
+			return {};
+		}
+		string code;
+
+		int i = 1;
+		for(string line; getline(codeStream, line);++i){
+			if(line.find("#include") != string::npos){
+				auto pathStart = line.find('"');
+				auto pathEnd = line.find('"', pathStart+1);
+				string includePath = line.substr(pathStart+1, pathEnd-(pathStart+1));
+				if( pathStart == string::npos ||
+					pathEnd == string::npos ||
+					includePath.empty()){
+						LOG(LogType::ERROR)
+								<<"Incorrect include! Path:"
+								<<std::quoted(path)
+								<<" raw file line: "
+								<<i
+								<<" line:"
+								<<std::quoted(line)
+								<<'\n';
+						return {};
+				}
+				code += includePath[0]=='/' 	?
+						readFile(includePath)	:
+						readFile(path.substr(0, path.rfind('/')+1)+includePath);
+			}else{
+				code += line+'\n';
+			}
+		}
+
+		return code;
 	}
 
 }

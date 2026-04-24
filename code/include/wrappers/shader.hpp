@@ -79,10 +79,7 @@ namespace ogl{
 		friend class ObjectFactory;
 
 		private:
-			std::string readFile(std::string path){
-								std::ifstream codeStream{path};
-								return {std::istreambuf_iterator<char>(codeStream),
-										std::istreambuf_iterator<char>()};}
+			std::string readFile(std::string path);
 
 		protected:
 			/**
